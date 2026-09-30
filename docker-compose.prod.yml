@@ -1,0 +1,272 @@
+# Hardened production stack — Gateway behind a Caddy reverse proxy that
+# terminates TLS. Login is the gateway's own /v2 form (no Caddy Basic Auth).
+#
+# This deployment connects to the CUSTOMER'S EXISTING QRadar 7.5 Console — it
+# does NOT run QRadar. Only the gateway + Caddy are started here; set QRADAR_URL
+# and QRADAR_SEC_TOKEN in .env to point at the Console.
+#   - Need something to click around without a Console? app/scripts/mock_qradar.py
+#     fakes the API surface the gateway uses.
+#
+# Only Caddy (:443) is exposed on the host. The gateway sits on the internal
+# Docker network and reaches the Console over the customer's network.
+#
+# Setup — run ./deploy.sh. It loads the bundled image tar, collects the config,
+# writes .env and starts the stack:
+#   ./deploy.sh
+#   open https://<CADDY_SITE_ADDRESS>/v2/
+#
+# Manual path (only if you cannot run deploy.sh) — the delivery ships PREBUILT
+# images, there is no Dockerfile in it, so never pass --build:
+#   1. gunzip -c RST-Qradar-AI-Copilot-images-*.tar.gz | docker load
+#      and put the loaded gateway tag in .env as GATEWAY_IMAGE_TAG=<tag>.
+#   2. cp .env.example .env  — fill LLM_*, RST_GATEWAY_SHARED_SECRET,
+#      RST_ADMIN_TOKEN, and the QRadar block (QRADAR_URL + QRADAR_SEC_TOKEN). For a
+#      Console with a trusted cert set RST_QRADAR_VERIFY_CERTS=true, or point
+#      RST_QRADAR_CA_CERT=/certs/qradar-ca.pem at the private CA (drop it into ./certs).
+#   3. mkdir -p state && openssl rand -hex 16 > state/machine-id #        && cat /proc/sys/kernel/random/uuid > state/server_guid && chmod 644 state/*
+#      (container hardware fingerprint = both files — see the ./state/* volumes
+#      below. Skip either and docker bind-mounts a DIRECTORY there: license
+#      activation fails with "no hardware identifier available" / the gateway
+#      cannot start, neither of which is a license fault. 644, not 600: the
+#      gateway runs as uid 10001 and must read them.)
+#   5. docker compose -f docker-compose.prod.yml up -d
+#   6. open https://<CADDY_SITE_ADDRESS>/v2/
+
+services:
+  gateway:
+    # No build: — the delivery bundle carries prebuilt images and no Dockerfile.
+    # Tag is installer-managed: rst-update.sh writes GATEWAY_IMAGE_TAG into .env
+    # on a health-gated release install / rollback (P4). Default preserves the
+    # pre-P4 behaviour when the var is unset.
+    image: rst-qradar-ai-copilot-gateway:${GATEWAY_IMAGE_TAG:-1.1.0}
+    container_name: rst-qradar-ai-copilot-gateway
+    restart: unless-stopped
+    # Resource ceiling so one runaway request / memory leak can't starve the
+    # host. Override in .env per host size.
+    deploy:
+      resources:
+        limits:
+          cpus: "${RST_GATEWAY_CPUS:-2}"
+          memory: ${RST_GATEWAY_MEM:-2g}
+    environment:
+      # ── Customer QRadar (REQUIRED — this stack ships no QRadar) ──
+      # Console URL + an authorized-service SEC token. The token's security
+      # profile bounds what the gateway can read; RST_LOG_SOURCE_WHITELIST narrows
+      # it further on our side.
+      - QRADAR_URL=${QRADAR_URL:?set QRADAR_URL to the customer's QRadar Console in .env}
+      - QRADAR_SEC_TOKEN=${QRADAR_SEC_TOKEN:?set QRADAR_SEC_TOKEN in .env}
+      - QRADAR_API_VERSION=${QRADAR_API_VERSION:-20.0}
+      # Consoles usually run a self-signed cert: verification is off unless set.
+      - RST_QRADAR_VERIFY_CERTS=${RST_QRADAR_VERIFY_CERTS:-}
+      - RST_QRADAR_CA_CERT=${RST_QRADAR_CA_CERT:-}
+      # Ariel search budget per statement (seconds) and the hard row cap.
+      - RST_AQL_TIMEOUT_SECONDS=${RST_AQL_TIMEOUT_SECONDS:-120}
+      - RST_AQL_MAX_ROWS=${RST_AQL_MAX_ROWS:-1000}
+      - RST_AQL_DEFAULT_WINDOW_MINUTES=${RST_AQL_DEFAULT_WINDOW_MINUTES:-60}
+      # Restrict which log sources the model may filter on (names / ids, fnmatch).
+      # Empty = whatever the token can see.
+      - RST_LOG_SOURCE_WHITELIST=${RST_LOG_SOURCE_WHITELIST:-}
+      # Gateway's own state (offenses, conversations, audit, notify config) — SQLite
+      # on the state volume. Override only to relocate the file.
+      - RST_STATE_DB=${RST_STATE_DB:-/app/state/copilot.db}
+      # Empty = no cross-origin access, which is right when the gateway serves
+      # the SPA. See .env.example before setting it.
+      - RST_CORS_ORIGINS=${RST_CORS_ORIGINS:-}
+      # Restricts where audit events may be POSTed. See .env.example.
+      - RST_AUDIT_WEBHOOK_ALLOWLIST=${RST_AUDIT_WEBHOOK_ALLOWLIST:-}
+      # ── LLM provider (REQUIRED) ──
+      - LLM_API_KEY=${LLM_API_KEY:?set LLM_API_KEY in .env}
+      - LLM_BASE_URL=${LLM_BASE_URL:-https://ark.cn-beijing.volces.com/api/v3}
+      - LLM_MODEL=${LLM_MODEL:?set LLM_MODEL in .env}
+      - LLM_TIMEOUT_S=${LLM_TIMEOUT_S:-}
+      # 推理强度（思考模式）——见 .env.example 同名段；不设走网关按任务的默认。
+      - LLM_REASONING=${LLM_REASONING:-}
+      - RST_NL2DSL_REASONING=${RST_NL2DSL_REASONING:-}
+      - RST_LLM_FIRST_TOKEN_TIMEOUT_S=${RST_LLM_FIRST_TOKEN_TIMEOUT_S:-}
+      - RST_EMBED_COOLDOWN_S=${RST_EMBED_COOLDOWN_S:-}
+      # Embeddings — REQUIRED for the RAG knowledge base (/api/kb/*). Without
+      # these three the KB silently never works, whatever .env says.
+      - RST_EMBED_MODEL=${RST_EMBED_MODEL:-}
+      - RST_EMBED_BASE_URL=${RST_EMBED_BASE_URL:-}
+      - RST_EMBED_DIM=${RST_EMBED_DIM:-}
+      # ── Auth — required in this stack. Caddy injects the shared secret upstream. ──
+      - RST_GATEWAY_SHARED_SECRET=${RST_GATEWAY_SHARED_SECRET:?set RST_GATEWAY_SHARED_SECRET in .env}
+      - RST_ADMIN_TOKEN=${RST_ADMIN_TOKEN:?set RST_ADMIN_TOKEN in .env}
+      # /metrics 的抓取令牌。不设 = 谁都能抓（既有行为），见 .env.example。
+      - RST_METRICS_TOKEN=${RST_METRICS_TOKEN:-}
+      # IdP groups granted admin under SSO. Without it nobody can ever be admin
+      # (is_admin() is group-only once SSO is on) and the 403 blames the IdP.
+      - RST_RBAC_ADMIN_GROUPS=${RST_RBAC_ADMIN_GROUPS:-}
+      # The other two roles. Unset means an SSO user outside the admin groups
+      # gets no role at all, which is the pre-3.0 behaviour: allowed to write,
+      # not allowed to administer. Name a group here to actually enforce
+      # read-only.
+      - RST_RBAC_ANALYST_GROUPS=${RST_RBAC_ANALYST_GROUPS:-}
+      - RST_RBAC_VIEWER_GROUPS=${RST_RBAC_VIEWER_GROUPS:-}
+      # ── Multi-user (enterprise) ──
+      # Empty = one account, from the two vars below. Set it and the gateway
+      # keeps accounts and roles in that database instead, seeding the first
+      # administrator from RST_ADMIN_USERNAME / RST_ADMIN_PASSWORD_HASH.
+      # The `userdb` service below is there if the customer has no Postgres of
+      # their own; point this at theirs and delete it if they do.
+      - RST_USER_DB_URL=${RST_USER_DB_URL:-}
+      # In-app login. Empty hash = the shipped admin / Admin@123 default, which
+      # is published — replace it. See .env.example for the generate command.
+      - RST_ADMIN_PASSWORD_HASH=${RST_ADMIN_PASSWORD_HASH:-}
+      - RST_ADMIN_USERNAME=${RST_ADMIN_USERNAME:-}
+      - RST_SESSION_TTL_HOURS=${RST_SESSION_TTL_HOURS:-}
+      # Empty on purpose: a production deployment that still has the factory
+      # password should refuse remote logins until a hash is set.
+      - RST_ALLOW_DEFAULT_PASSWORD=${RST_ALLOW_DEFAULT_PASSWORD:-}
+      - RST_SHARED_BUCKET_FALLBACK=${RST_SHARED_BUCKET_FALLBACK:-}
+      # Per-IP request ceilings. Raise for a large team behind one NAT egress.
+      - RST_RATELIMIT_GENERATE=${RST_RATELIMIT_GENERATE:-}
+      - RST_RATELIMIT_EXECUTE=${RST_RATELIMIT_EXECUTE:-}
+      # Multi-turn conversation memory lives in the gateway's SQLite store
+      # (RST_STATE_DB); this is how long an idle thread is kept (default 7 days).
+      - RST_CONVERSATION_TTL_DAYS=${RST_CONVERSATION_TTL_DAYS:-}
+      # Response cache for identical questions (cuts duplicate LLM cost).
+      - RST_DSL_CACHE_TTL_S=${RST_DSL_CACHE_TTL_S:-}
+      # ── License ──
+      - RST_LICENSE_PUBLIC_KEY_PATH=/app/keys/license_public.pem
+      - LICENSE_SERVER_URL=${LICENSE_SERVER_URL:-}
+      # ── Online update (content packs + image releases) ──
+      # Current running version — the heartbeat sends it, and the server only
+      # offers a release/content pack newer than this. Keep in lockstep with
+      # GATEWAY_IMAGE_TAG (rst-update.sh bumps the tag on install).
+      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-1.1.0}}
+      # Vendor content/release signing PUBLIC key — content packs + online releases
+      # verify against it fail-closed. OPTIONAL: leave unset and verification falls
+      # back to the built-in license public key (fine until you ship dedicated-key
+      # signed content). To enable dedicated content signing, drop the vendor
+      # content_public.pem into ./certs and set this to /certs/content_public.pem.
+      - RST_CONTENT_PUBLIC_KEY_PATH=${RST_CONTENT_PUBLIC_KEY_PATH:-}
+      # Content-pack cache under the /app/state volume so it survives image
+      # swaps (default is a container-layer dir, lost on every update).
+      - RST_CONTENT_DIR=/app/state/content
+      # Release staging — a HOST bind mount (see volumes) so the host-side
+      # rst-update.sh reads staged artifacts + current.json the container wrote.
+      - RST_RELEASE_DIR=/app/release
+      # ── Audit (on by default; retention is set with the offense sync block) ──
+      - RST_AUDIT_ENABLED=${RST_AUDIT_ENABLED:-}
+      - RST_MASKING_MODE=${RST_MASKING_MODE:-}
+      # Settings written from the admin UI (QRadar connection, offense sync, audit
+      # sinks). Under the state volume, not the image: the whole point of the
+      # setup wizard is that the customer never edits a file, so this must
+      # survive an image swap.
+      - RST_SETTINGS_FILE=/app/state/settings.yml
+      # 密钥文件放持久化卷。默认是相对 CWD 的 /app/.rst_secret_key —— 在镜像层里，
+      # 升级一次镜像就换一把新钥匙，飞书/钉钉的签名密钥和 SMTP 密码会全部变成
+      # 解不开的密文，现象是投递突然签名不符，且看不出原因。
+      - RST_SECRET_KEY_FILE=/app/state/.rst_secret_key
+      # ── Scheduled patrols — each gates a whole feature and is OFF unless set ──
+      # Report scheduler (daily/weekly/monthly).
+      - RST_REPORT_SCHEDULE=${RST_REPORT_SCHEDULE:-}
+      - RST_REPORT_WEBHOOK_URL=${RST_REPORT_WEBHOOK_URL:-}
+      - RST_REPORT_WEBHOOK_HEADERS=${RST_REPORT_WEBHOOK_HEADERS:-}
+      - RST_REPORT_PERSIST=${RST_REPORT_PERSIST:-}
+      - RST_REPORT_CHECK_INTERVAL_SECONDS=${RST_REPORT_CHECK_INTERVAL_SECONDS:-}
+      # 提示词里「当前时间」和日界用的时区。不设 = UTC —— 对 UTC+8 的客户，
+      # 「今天下午」「昨天」「23号」全会按 UTC 切日界，查出来是空的或错的一天。
+      # dev compose 一直传着它，prod 漏了。
+      - RST_TIMEZONE=${RST_TIMEZONE:-}
+      - RST_SERVER_GUID_FILE=/app/hostid/server_guid
+      - RST_REPORT_TZ=${RST_REPORT_TZ:-}
+      - RST_REPORT_CATCHUP_MAX=${RST_REPORT_CATCHUP_MAX:-}
+      # ── Offense sync (on by default once QRadar is configured) ──
+      # Polls /api/siem/offenses: new offenses get an AI summary, land in the
+      # live feed and are dispatched to notify targets; status changes are synced.
+      - RST_OFFENSE_INGEST_ENABLED=${RST_OFFENSE_INGEST_ENABLED:-1}
+      - RST_OFFENSE_INGEST_INTERVAL_SECONDS=${RST_OFFENSE_INGEST_INTERVAL_SECONDS:-30}
+      # Cold-start lookback (24h default; e.g. 7d on a site with a backlog).
+      - RST_OFFENSE_INGEST_LOOKBACK=${RST_OFFENSE_INGEST_LOOKBACK:-}
+      # Ignore offenses below this magnitude (0-10).
+      - RST_OFFENSE_MIN_MAGNITUDE=${RST_OFFENSE_MIN_MAGNITUDE:-0}
+      - RST_OFFENSE_INGEST_CONCURRENCY=${RST_OFFENSE_INGEST_CONCURRENCY:-}
+      # Audit log retention in the gateway's own store (days).
+      - RST_AUDIT_RETENTION_DAYS=${RST_AUDIT_RETENTION_DAYS:-180}
+    # environment 只列需要覆盖默认值的键。.env.example 里其余的键（RST_OUTPUT_LANG、
+    # 平台体检阈值、Offense 摘要、调查预算……）靠这一行进容器；没有它，客户照文档写进
+    # .env 也不生效，且不报错（compose 只把 .env 用于插值）。同 docker-compose.sso.yml。
+    env_file:
+      - path: .env
+        required: false
+    # 容器内不留多余权限：镜像的 entrypoint 会把进程降到 uid 10001（见
+    # docker-entrypoint.sh），这里只保留它修正 state 卷属主和降权所需的几个
+    # capability。不写 user: —— 老部署的 gateway_state 卷是 root 建的，直接钉死
+    # uid 会让升级时容器起不来，属主交给 entrypoint 修。
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETUID
+      - SETGID
+    volumes:
+      - gateway_state:/app/state
+      # Custom CA bundle for the customer's HTTPS Console (referenced by RST_QRADAR_CA_CERT
+      # as /certs/...). Harmless when unused.
+      - ./certs:/certs:ro
+      # 容器硬件指纹源(license SDK 需要稳定的 machine-id;slim 镜像里 /etc/machine-id
+      # 是空的,且 docker veth 的 MAC 被 SDK 当作随机地址拒掉)。文件由 deploy.sh
+      # 生成,千万别重新生成 —— 换文件 = 换硬件,license 要重激活。
+      - ./state/machine-id:/etc/machine-id:ro
+      # 指纹的另一半。1.1.21 前它生在 gateway_state 卷里,卷丢了指纹就变;现在和
+      # machine-id 同目录同寿命,deploy.sh 生成 / 从老卷迁出。同样别重新生成。
+      - ./state/server_guid:/app/hostid/server_guid:ro
+      # (Dedicated content signing is opt-in: put the vendor content_public.pem in
+      # ./certs and point RST_CONTENT_PUBLIC_KEY_PATH at /certs/content_public.pem.
+      # Not mounted by default — verification falls back to the built-in license key.)
+      # Release staging shared with the host installer: release_store (in the
+      # container) writes staged artifacts + current.json here on heartbeat;
+      # rst-update.sh (on the host, default RELEASE_DIR=./release) reads them to
+      # docker-load + health-gate the swap. MUST be a bind mount — a named
+      # volume is not readable by the host script.
+      - ./release:/app/release
+
+  # Enterprise user table. Only needed when RST_USER_DB_URL is set; leave it
+  # stopped (`docker compose up -d gateway caddy`) on a single-account install.
+  #
+  # Backups: this volume holds the accounts. Losing it means everyone signs in
+  # again as the seeded administrator — see docs/BACKUP.md.
+  userdb:
+    image: postgres:16-alpine
+    container_name: rst-qradar-ai-copilot-userdb
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${RST_USER_DB_USER:-rst}
+      - POSTGRES_PASSWORD=${RST_USER_DB_PASSWORD:?set RST_USER_DB_PASSWORD in .env when using the bundled user database}
+      - POSTGRES_DB=${RST_USER_DB_NAME:-rst_users}
+    volumes:
+      - userdb_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${RST_USER_DB_USER:-rst}"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  caddy:
+    image: caddy:2
+    container_name: rst-qradar-ai-copilot-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - CADDY_SITE_ADDRESS=${CADDY_SITE_ADDRESS:?set CADDY_SITE_ADDRESS to the hostname or IP analysts use}
+      - RST_GATEWAY_SHARED_SECRET=${RST_GATEWAY_SHARED_SECRET:?set RST_GATEWAY_SHARED_SECRET in .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - gateway
+
+volumes:
+  gateway_state:
+  userdb_data:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QRadar AI Copilot</title>
+  <defs>
+    <clipPath id="qac-clip"><rect width="128" height="128" rx="28"/></clipPath>
+  </defs>
+  <g clip-path="url(#qac-clip)">
+    <rect width="128" height="128" fill="#0060BE"/>
+    <path d="M128 0l0 128-128 0z" fill="#003D7A"/>
+  </g>
+  <g fill="#FFFFFF">
+    <rect x="42.3" y="18" width="27.5" height="6"/>
+    <rect x="29.8" y="28" width="52.5" height="6"/>
+    <rect x="24.6" y="38" width="16.5" height="6"/>
+    <rect x="71" y="38" width="16.5" height="6"/>
+    <rect x="23" y="48" width="15" height="6"/>
+    <rect x="74" y="48" width="15" height="6"/>
+    <rect x="24.6" y="58" width="16.5" height="6"/>
+    <rect x="71" y="58" width="16.5" height="6"/>
+    <rect x="29.8" y="68" width="54.2" height="6"/>
+    <rect x="42.3" y="78" width="27.5" height="6"/>
+    <rect x="78" y="78" width="15" height="6"/>
+    <rect x="87" y="88" width="15" height="6"/>
+    <rect x="96" y="98" width="15" height="6"/>
+  </g>
+  <!-- lucide sparkles, 24x24 at (90,10) -->
+  <g transform="translate(90 10)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/>
+    <path d="M20 2v4"/>
+    <path d="M22 4h-4"/>
+    <circle cx="4" cy="20" r="2"/>
+  </g>
+</svg>
