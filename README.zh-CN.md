@@ -7,7 +7,7 @@
 <p align="center">
   <b>用自然语言问你的 QRadar。</b><br>
   接在你已有的 IBM QRadar 上的私有化 AI 安全运营助手：<br>
-  AQL 智能查询、Offense 研判与调查、规则设计。只读、可离网部署，每一次模型调用都有审计。
+  AQL 智能查询、Offense 研判与调查、规则设计。只读、可离线部署，每一次模型调用都有审计。
 </p>
 
 <p align="center">
@@ -30,7 +30,7 @@
 
 - **直接用你现有的 QRadar。** 一个 Docker 网关，接在已有的 Console 旁边。不新建数据存储、不装采集端，通过授权服务 Token 读取事件、流、Offense、规则和日志源。
 - **设计上只读。** 每条生成的查询在执行前都校验为只读的 AQL `SELECT`。对 QRadar 唯一的写操作是分析师手动发起的三个 Offense 动作：加备注、关闭、指派。
-- **数据留在你的网络里。** 字段脱敏在数据发给模型之前完成。大模型可以接火山方舟、任意 OpenAI 兼容端点，或自建 vLLM / Ollama 实现完全离网。
+- **数据留在你的网络里。** 字段脱敏在数据发给模型之前完成。大模型可以接火山方舟、任意 OpenAI 兼容端点，或自建 vLLM / Ollama 实现完全离线。
 - **每一步都可追溯。** 每次登录、查询、模型调用、设置变更都是一条可检索的审计事件。
 
 ## 快速开始
@@ -43,7 +43,7 @@
 curl -fsSL https://github.com/reallysec/RST-Qradar-AI-Copilot/releases/latest/download/install.sh | sudo bash
 ```
 
-脚本下载最新的交付包，校验 SHA-256，解压到 `/opt/rst-qradar-ai-copilot` 后执行 `deploy.sh`。所有版本是同一个交付包：不导入许可即为免费的社区版，在「设置 → 许可」导入许可后原地解锁专业版或企业版。离网主机可以在有网的机器上加 `--download-only` 下载，再把交付包拷过去。
+脚本下载最新的交付包，校验 SHA-256，解压到 `/opt/rst-qradar-ai-copilot` 后执行 `deploy.sh`。所有版本是同一个交付包：不导入许可即为免费的社区版，在「设置 → 许可」导入许可后原地解锁专业版或企业版。离线主机可以在有网的机器上加 `--download-only` 下载，再把交付包拷过去。
 
 也可以从 [Releases](https://github.com/reallysec/RST-Qradar-AI-Copilot/releases) 手动下载交付包，然后：
 
@@ -64,7 +64,7 @@ cd RST-Qradar-AI-Copilot-<版本> && ./deploy.sh
 - **智能查询**：自然语言生成 AQL，只读 `SELECT` 校验、Ariel 检索全流程、结果表、多轮追问、一键跳转 QRadar Console。
 - **Offense 流**：轮询 `/api/siem/offenses`，逐条 AI 摘要、实时推送、处置状态，关闭 / 备注 / 指派写回 QRadar。
 - **安全态势**：态势总览、本地审计留痕。
-- **隐私控制**：日志源白名单、字段脱敏三档（云端 / 私有 / 离网）、按任务分级的推理强度。
+- **隐私控制**：日志源白名单、字段脱敏三档（云端 / 私有 / 离线）、按任务分级的推理强度。
 - **通知**：飞书、钉钉、企业微信、Teams、Slack、邮件。
 
 <table>
@@ -100,7 +100,7 @@ cd RST-Qradar-AI-Copilot-<版本> && ./deploy.sh
 | 审计转发到外部 SIEM（syslog / webhook，可回送 QRadar） | — | — | ✅ |
 | 多 provider LLM 故障转移 / 高可用 | — | — | ✅ |
 | OIDC 单点登录 / 企业身份 | — | — | ✅ |
-| 离线 / 气隙许可激活 | — | — | ✅ |
+| 离线许可激活 | — | — | ✅ |
 | 节点数 | 1 | 1 | 不限 |
 | 模型调用 | 不限 | 不限 | 不限 |
 
@@ -121,7 +121,7 @@ cd RST-Qradar-AI-Copilot-<版本> && ./deploy.sh
 - 入站只有分析师浏览器的 443。出站：大模型端点、你的 QRadar Console、`license.reallysec.com`（使用离线许可时不需要，企业版）。
 - 对 QRadar 只读，只有分析师手动发起的三个 Offense 动作（备注、关闭、指派）例外。不写规则、参考数据或配置。
 - 日志源白名单在 Token 自身安全配置文件之外，再限定模型能过滤的范围。
-- 字段脱敏在数据发给模型之前完成；离网模式不出网。
+- 字段脱敏在数据发给模型之前完成；离线模式不出网。
 - 每次登录、查询、模型调用、设置变更都是一条审计事件，企业版可转发到外部 SIEM（包括 QRadar 自身）。
 
 ## 支持的版本
