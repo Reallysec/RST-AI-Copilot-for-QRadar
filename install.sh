@@ -89,4 +89,4 @@ rm -f "$DIR"/"$STEM"-images-*.tar
 tar xzf "$ARCHIVE" -C "$DIR" --strip-components=1
 say "== unpacked; starting deploy.sh"
 cd "$DIR"
-exec ./deploy.sh </dev/tty
+exec bash ./deploy.sh </dev/tty   # bash: bundles up to 1.1.1 ship deploy.sh without +x
