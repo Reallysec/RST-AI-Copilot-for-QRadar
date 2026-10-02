@@ -139,6 +139,6 @@ Details and pricing: [licensing](https://reallysec.com/en/docs/qradar-ai-copilot
 
 ## Licensing
 
-RST QRadar AI Copilot is proprietary software, distributed as compiled container images under the [End User License Agreement](LICENSE), also included in every bundle as `docs/EULA.md`. The Community Edition is free to use without a licence; Professional and Enterprise are activated online or with an offline `.lic` from [console.reallysec.com](https://console.reallysec.com). "RST", "Reallysec", "斯普朗克" and the product logos are trademarks.
+RST QRadar AI Copilot is proprietary software, distributed as compiled container images under the [End User License Agreement](LICENSE), included in every bundle as `docs/EULA.md`. The Community Edition is free to use without a licence; Professional and Enterprise are activated online or with an offline `.lic` from [console.reallysec.com](https://console.reallysec.com). "RST", "Reallysec", "斯普朗克" and the product logos are trademarks.
 
 © Anhui Reallysec Information Technology Ltd.

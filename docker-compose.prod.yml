@@ -20,9 +20,10 @@
 #   1. gunzip -c RST-Qradar-AI-Copilot-images-*.tar.gz | docker load
 #      and put the loaded gateway tag in .env as GATEWAY_IMAGE_TAG=<tag>.
 #   2. cp .env.example .env  — fill LLM_*, RST_GATEWAY_SHARED_SECRET,
-#      RST_ADMIN_TOKEN, and the QRadar block (QRADAR_URL + QRADAR_SEC_TOKEN). For a
-#      Console with a trusted cert set RST_QRADAR_VERIFY_CERTS=true, or point
-#      RST_QRADAR_CA_CERT=/certs/qradar-ca.pem at the private CA (drop it into ./certs).
+#      RST_ADMIN_TOKEN, and the QRadar block (QRADAR_URL + QRADAR_SEC_TOKEN). The
+#      Console certificate is verified (.env.example sets RST_QRADAR_VERIFY_CERTS=true);
+#      for a self-signed Console drop its CA into ./certs and set
+#      RST_QRADAR_CA_CERT=/certs/qradar-ca.pem.
 #   3. mkdir -p state && openssl rand -hex 16 > state/machine-id #        && cat /proc/sys/kernel/random/uuid > state/server_guid && chmod 644 state/*
 #      (container hardware fingerprint = both files — see the ./state/* volumes
 #      below. Skip either and docker bind-mounts a DIRECTORY there: license
@@ -38,7 +39,7 @@ services:
     # Tag is installer-managed: rst-update.sh writes GATEWAY_IMAGE_TAG into .env
     # on a health-gated release install / rollback (P4). Default preserves the
     # pre-P4 behaviour when the var is unset.
-    image: rst-qradar-ai-copilot-gateway:${GATEWAY_IMAGE_TAG:-1.1.3}
+    image: rst-qradar-ai-copilot-gateway:${GATEWAY_IMAGE_TAG:-1.1.4}
     container_name: rst-qradar-ai-copilot-gateway
     restart: unless-stopped
     # Resource ceiling so one runaway request / memory leak can't starve the
@@ -92,7 +93,7 @@ services:
       # ── Auth — required in this stack. Caddy injects the shared secret upstream. ──
       - RST_GATEWAY_SHARED_SECRET=${RST_GATEWAY_SHARED_SECRET:?set RST_GATEWAY_SHARED_SECRET in .env}
       - RST_ADMIN_TOKEN=${RST_ADMIN_TOKEN:?set RST_ADMIN_TOKEN in .env}
-      # /metrics 的抓取令牌。不设 = 谁都能抓（既有行为），见 .env.example。
+      # /metrics 的抓取令牌。不设 = Caddy 对外返回 404，只能在 compose 网络内抓，见 .env.example。
       - RST_METRICS_TOKEN=${RST_METRICS_TOKEN:-}
       # IdP groups granted admin under SSO. Without it nobody can ever be admin
       # (is_admin() is group-only once SSO is on) and the 403 blames the IdP.
@@ -134,7 +135,7 @@ services:
       # Current running version — the heartbeat sends it, and the server only
       # offers a release/content pack newer than this. Keep in lockstep with
       # GATEWAY_IMAGE_TAG (rst-update.sh bumps the tag on install).
-      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-1.1.3}}
+      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-1.1.4}}
       # Vendor content/release signing PUBLIC key — content packs + online releases
       # verify against it fail-closed. OPTIONAL: leave unset and verification falls
       # back to the built-in license public key (fine until you ship dedicated-key
@@ -260,6 +261,8 @@ services:
       # SNI fallback for bare-IP access (see Caddyfile); one name only.
       - CADDY_DEFAULT_SNI=${CADDY_DEFAULT_SNI:-${CADDY_SITE_ADDRESS}}
       - RST_GATEWAY_SHARED_SECRET=${RST_GATEWAY_SHARED_SECRET:?set RST_GATEWAY_SHARED_SECRET in .env}
+      # Empty = /metrics answers 404 from outside (see Caddyfile).
+      - RST_METRICS_TOKEN=${RST_METRICS_TOKEN:-}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
