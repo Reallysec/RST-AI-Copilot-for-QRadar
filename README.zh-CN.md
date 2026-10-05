@@ -1,11 +1,11 @@
 <p align="center">
-  <img src=".github/assets/product-mark.svg" width="96" height="96" alt="RST QRadar AI Copilot">
+  <img src=".github/assets/product-mark.svg" width="96" height="96" alt="RST AI Copilot for QRadar">
 </p>
 
-<h1 align="center">RST QRadar AI Copilot</h1>
+<h1 align="center">RST AI Copilot for QRadar</h1>
 
 <p align="center">
-  <b>用自然语言问你的 QRadar。</b><br>
+  <b>用自然语言问你的 QRadar®。</b><br>
   接在你已有的 IBM QRadar 上的私有化 AI 安全运营助手：<br>
   AQL 智能查询、Offense 研判与调查、规则设计。只读、可离线部署，每一次模型调用都有审计。
 </p>
@@ -26,7 +26,7 @@
   <img src=".github/assets/chat-query-aql.zh.png" alt="智能查询：问题、结果表和生成的 AQL" width="92%">
 </p>
 
-## 为什么选 RST QRadar AI Copilot
+## 为什么选 RST AI Copilot for QRadar
 
 - **直接用你现有的 QRadar。** 一个 Docker 网关，接在已有的 Console 旁边。不新建数据存储、不装采集端，通过授权服务 Token 读取事件、流、Offense、规则和日志源。
 - **设计上只读。** 每条生成的查询在执行前都校验为只读的 AQL `SELECT`。对 QRadar 唯一的写操作是分析师手动发起的三个 Offense 动作：加备注、关闭、指派。
@@ -139,6 +139,10 @@ cd RST-Qradar-AI-Copilot-<版本> && ./deploy.sh
 
 ## 许可
 
-RST QRadar AI Copilot 是专有软件，以编译后的容器镜像交付，依据[《最终用户许可协议》](LICENSE)使用（每个交付包里也附有 `docs/EULA.md`）。社区版无需许可、免费使用；专业版和企业版在 [console.reallysec.com](https://console.reallysec.com) 获取许可后在线激活或导入离线 `.lic`。「RST」「Reallysec」「斯普朗克」和产品标识是商标。
+RST AI Copilot for QRadar 是专有软件，以编译后的容器镜像交付，依据[《最终用户许可协议》](LICENSE)使用（每个交付包里也附有 `docs/EULA.md`）。社区版无需许可、免费使用；专业版和企业版在 [console.reallysec.com](https://console.reallysec.com) 获取许可后在线激活或导入离线 `.lic`。「RST」「Reallysec」「斯普朗克」和产品标识是商标。
+
+## 商标
+
+IBM 和 QRadar 是 International Business Machines Corporation 在全球多个司法管辖区注册的商标。RST AI Copilot for QRadar 是 Reallysec 的独立产品，与 IBM 无隶属关系，亦未获 IBM 赞助或认可。
 
 © 安徽斯普朗克信息技术有限公司（Anhui Reallysec Information Technology Ltd.）

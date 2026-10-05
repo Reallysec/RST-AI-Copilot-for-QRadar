@@ -1,41 +1,69 @@
-# RST QRadar AI Copilot — End User License Agreement
+# RST AI Copilot for QRadar — End User License Agreement
 
-Version 1.2 · Effective 2026-10-05
+Version 1.3 · Effective 2026-10-06
 
 This End User License Agreement (the "Agreement") is between Anhui Reallysec
 Information Technology Ltd. (安徽斯普朗克信息技术有限公司, "Reallysec") and the
-individual or entity that installs or uses the Software ("you"). By installing,
-activating, or using the Software you agree to this Agreement. If you do not
-agree, do not install or use the Software. If you accept this Agreement on
-behalf of an organization, you represent that you have the authority to bind
-that organization, and "you" refers to that organization.
+individual or entity that installs or uses the Software ("you"). If you accept
+this Agreement on behalf of an organization, you represent that you have the
+authority to bind that organization, and "you" refers to that organization.
+
+**How you accept.** You accept this Agreement by installing, activating, or
+using the Software. In addition, the Software asks each User, when they first
+sign in and again whenever the version of this Agreement changes, to confirm
+that they have read and agree to it, and a User who does not agree cannot use
+the Software. Where the Software has no individual user accounts, an
+administrator accepts on behalf of the installation. If you do not agree, do
+not install or use the Software.
 
 **Please read the sections in bold with particular care. They limit Reallysec's
-warranties and liability and restrict how you may use the Software.**
+warranties, indemnity and liability (Sections 9, 10 and 11), restrict how you
+may use the Software (Sections 3 and 14), and set out your responsibilities for
+Your Data and the destinations you send it to (Section 6), for AI-generated
+output, and for changes the Software makes in your QRadar deployment at your
+direction (Section 9.3).**
 
 ## 1. Definitions
 
-- **"Software"** means RST QRadar AI Copilot in object-code form as delivered
-  by Reallysec, including container images, deployment files, compiled
-  feature modules, documentation, and any updates Reallysec provides.
+- **"Software"** means RST AI Copilot for QRadar in object-code form as
+  delivered by Reallysec, including container images, deployment files,
+  compiled feature modules, documentation, and any updates Reallysec provides.
+  The Software is a security-operations assistant that reads from, and at your
+  direction acts on, the IBM QRadar® deployment you connect it to.
 - **"Documentation"** means the user and installation guides Reallysec publishes
   for the Software at https://reallysec.com/docs.
 - **"License"** means the license key or license file issued by Reallysec that
-  specifies your edition, feature set, node count, user count, and term.
+  specifies your edition, feature set, Node count, User count, and term.
 - **"Edition"** means the Community, Professional, or Enterprise edition, or a
   trial. The Professional and Enterprise editions and trials are stated in your
   License; the Community Edition is the Software used without a License.
+- **"Paid Edition"** means the Professional or Enterprise edition under a License
+  for which you have paid the applicable fees. A trial is not a Paid Edition.
+- **"Subscription Term"** means the term of a Paid Edition License stated in
+  your License or Order.
+- **"Node"** means one installation of the Software on one host, identified by
+  its host fingerprint (Section 6.2).
+- **"User"** means an enabled user account in the Software. Disabled accounts
+  are not counted.
 - **"Order"** means the quotation, purchase order, or other document under which
   you acquired the License.
 - **"Your Data"** means the events, flows, offenses, and other data from your
   QRadar deployment that the Software processes on your behalf.
+- **"Language-Model Provider"** means the provider of a language-model endpoint
+  that you configure in the Software, including a model you host yourself.
+- **"AI Output"** means analyses, summaries, answers, queries, and other content
+  that the Software generates with a language model.
+- **"QRadar Actions"** means changes the Software makes in your QRadar
+  deployment through the QRadar API when you or your Users instruct it to,
+  namely adding notes to offenses, assigning offenses, setting or clearing
+  their follow-up flag, and closing offenses.
 
 ## 2. License Grant
 
 Subject to this Agreement and payment of the applicable fees, Reallysec grants
 you a non-exclusive, non-transferable, non-sublicensable license, for the term
 stated in your License, to install and use the Software for your internal
-business operations, on no more nodes and for no more users than your License
+business operations, on no more Nodes and for no more Users than your License
 permits, and limited to the features of your Edition. Your employees and contractors may use the
 Software on your behalf; you are responsible for their compliance with this
 Agreement.
@@ -45,7 +73,7 @@ stated in the License.
 
 Without a License, Reallysec grants you the same license free of charge and
 without a fixed term, limited to the features of the Community Edition, one
-user, and one node. Reallysec may change the features of the Community Edition
+User, and one Node. Reallysec may change the features of the Community Edition
 in later versions of the Software.
 
 ## 3. Restrictions
@@ -61,12 +89,13 @@ in later versions of the Software.
    otherwise give third parties access to a substantial set of its features;**
 4. **sell, rent, lease, lend, sublicense, distribute, or otherwise transfer the
    Software or the License, except as Reallysec agrees in writing;**
-5. **share one License across more nodes, users, hosts, or organizations
+5. **share one License across more Nodes, Users, hosts, or organizations
    than it permits;**
 6. **remove, alter, or obscure any copyright, trademark, license, or other
    notice in the Software;**
-7. **use the Software in violation of applicable law, including export control
-   and data protection laws.**
+7. **use the Software in violation of applicable law, including the export
+   control, sanctions and data protection laws referred to in Sections 6 and
+   14.**
 
 ## 4. Ownership
 
@@ -74,109 +103,349 @@ The Software is licensed, not sold. Reallysec and its licensors retain all right
 title, and interest in and to the Software, including all intellectual property
 rights. All rights not expressly granted in this Agreement are reserved.
 
+Reallysec claims no ownership of Your Data or of AI Output. Your use of AI
+Output is at your own risk under Section 9.3.
+
 If you provide suggestions or feedback about the Software, Reallysec may use them
 without restriction or obligation to you.
 
-## 5. Third-Party Components
+## 5. Third-Party Components and Services
 
 The Software includes third-party and open-source components, listed in the
 THIRD-PARTY-NOTICES file delivered with the Software. Each is licensed under its
 own terms, which govern your use of that component. Nothing in this Agreement
 limits your rights under those licenses.
 
-## 6. Data
+Your QRadar deployment, your Language-Model Providers, and the notification
+services you connect to the Software are not part of the Software. You obtain
+them under your own agreements with their providers. Reallysec does not control
+them and is not responsible for their availability, security, content, or
+handling of data you send to them.
+
+## 6. Data and Privacy
+
+### 6.1 Your Data
 
 The Software runs in your environment. Your Data stays under your control, and
 you are responsible for it, including under applicable data protection laws.
+Reallysec does not receive Your Data through the Software, except during
+support access under Section 6.6.
 
-- **QRadar Console.** The Software connects to the QRadar Console you configure,
-  using the authorized service token you provide, to read and search Your Data.
-  The token is stored in your environment and is not sent to Reallysec.
-- **License and update service.** To activate and validate the License and to
-  offer updates, the Software sends Reallysec's license service the license
-  identifier, the product identifier and version, a hashed host fingerprint
-  derived from machine identifiers, and activation status. It does not send
-  Your Data. Offline activation, where your Edition includes it, sends nothing.
-- **Language models.** The Software sends prompts, which may include portions of
-  Your Data, to the language-model endpoints you configure, subject to the field
-  masking mode you select. Those endpoints are provided by you or your chosen
-  provider under their own terms; Reallysec does not receive that data.
+### 6.2 What the Software sends outside your environment
 
-## 7. Updates, Support, and Preview Features
+Apart from destinations you configure yourself (your QRadar Console,
+Language-Model Providers, notification channels, audit-forwarding syslog and
+webhook targets, report webhooks, and single sign-on providers), the Software
+sends data outside your environment only as listed here. None of those
+destinations is set by default, and the Software's web interface loads no
+third-party scripts or analytics.
 
-Reallysec may provide updates during the term of your License. Support, service
+- **Online activation.** When you activate a License online, the Software sends
+  Reallysec's license service (license.reallysec.com), once, the license token
+  (including the licensee details it contains, such as the e-mail address,
+  license type, and Node and User limits), the license identifier, the product
+  identifier and version, a random installation identifier generated when the
+  Software first starts, and the host fingerprint. The host fingerprint is a
+  SHA-256 hash computed from machine identifiers such as the machine ID or MAC
+  address, the CPU model and the operating-system name; the underlying values
+  do not leave the machine.
+- **Heartbeat.** While an online-activated License is in use, the Software sends
+  the license service, about once every twenty-four (24) hours and every five
+  (5) minutes after a failed attempt, the license identifier, the product
+  identifier and version, the installation identifier, the host fingerprint,
+  and a timestamp. When the license session is close to expiring, it is renewed
+  with the same data. The heartbeat contains no host names, user names, or IP
+  addresses. Deactivating a License takes effect locally and sends nothing.
+- **Verification-failure report.** If, while a License is activated, a
+  downloaded release manifest or content pack fails signature verification,
+  the Software sends the license service the license identifier, the product
+  identifier and version, and the reason for the failure. The Software sends no
+  other telemetry and no crash reports.
+- **Update checks.** About once a day, every installation, including the
+  Community Edition and installations without a License, sends an anonymous
+  request to GitHub Releases, operated by GitHub, Inc. and not by Reallysec, or
+  to a mirror you configure, to look for new releases and signed content packs.
+  The request carries no version number, license information, or customer data
+  beyond what any HTTP request carries. A new release is downloaded and
+  installed only when an administrator chooses to. Content packs are handled as
+  described in Section 7.
+- **Offline activation.** An installation activated offline, where your Edition
+  includes it, makes none of the requests listed above.
+- **QRadar Console.** The Software sends the authorized service token you
+  provide only to the QRadar Console you configure, to read and search Your Data
+  and to perform QRadar Actions. The token is not sent to Reallysec or to any
+  Language-Model Provider and is not written to logs.
+- **Language models.** The Software has no built-in language-model endpoint or
+  key. It sends user questions and offense, event and AQL query results, which
+  may include portions of Your Data, only to the language-model endpoints you
+  configure, subject to the field masking mode you select (Section 6.4).
+  Reallysec does not receive that data.
+
+The license service also receives the IP address from which each request
+comes, as any internet service does. Nothing sent to Reallysec or to GitHub
+under this Section includes the contents of your offenses, events, or queries.
+Reallysec does not use Your Data to train language models.
+
+### 6.3 How Reallysec uses license-service data
+
+Reallysec uses the data in Section 6.2 that reaches its license service,
+including the IP address, only to activate and validate Licenses, to enforce
+the Node and User limits of your License, to detect tampered releases and
+content packs and misuse of Licenses, to verify usage under Section 8, and to provide support.
+Reallysec does not sell this data or use it for advertising. Reallysec keeps it
+while your License is active and for up to two (2) years after it ends, or
+longer only where the law requires, and then deletes or anonymizes it. Where
+any of this data is personal information, Reallysec handles it as described in
+its privacy notice at https://reallysec.com/privacy-policy.
+
+### 6.4 Language-Model Providers
+
+**Field masking matches known patterns and field names. It reduces, but does not
+guarantee to remove, personal or sensitive information in what is sent to a
+Language-Model Provider. In particular, user names inside free-text fields
+such as log messages are not masked in any mode, and the airgapped mode applies
+no masking at all. You choose the Language-Model Provider and the masking
+mode. You are responsible for your agreement with the Language-Model Provider,
+including whether it may retain your data or use it to train models, and for
+complying with the laws that apply to sending data to it, including personal
+information protection and cross-border data transfer rules.**
+
+### 6.5 Cross-border transfers
+
+**You decide where Your Data goes. If a Language-Model Provider, notification
+service or other destination you configure is outside mainland China, you are
+responsible for any security assessment, standard contract, certification,
+consent or other requirement that applies to sending data to it.** Reallysec
+operates the license service and may host it outside mainland China, and GitHub
+Releases is operated by GitHub outside mainland China. Only the data listed in
+Section 6.2 is sent to them. An installation without a License sends nothing
+to the license service, and an installation activated offline contacts
+neither.
+
+### 6.6 Support access
+
+Reallysec accesses your environment or Your Data only when you authorize it in
+advance for a specific support request, and only to the extent you authorize.
+In doing so Reallysec acts on your behalf as an entrusted party under Article 21
+of the Personal Information Protection Law of the People's Republic of China.
+Reallysec will process Your Data only to provide the support you requested and
+according to your instructions, will keep it confidential, will limit access to
+personnel bound by confidentiality obligations, and will not keep copies after
+the support is complete unless you agree. On request, Reallysec will sign a
+data processing agreement with you that sets out these obligations.
+
+## 7. License Checks, Updates, Support, and Preview Features
+
+**A paid or trial License is checked when it is activated and, for online
+activation, at each heartbeat under Section 6.2. If an online-activated
+installation cannot reach the license service for more than seven (7) days,
+the Software locks its features until contact is restored. If the License
+expires or is revoked, the features beyond the Community Edition stop and the
+Software continues as the Community Edition under Section 12. Your Data is not
+deleted in either case.**
+
+Releases and content packs are signed by Reallysec, and the Software rejects
+any that fail signature verification. By default, a newer content pack found
+during an update check is applied automatically after it passes verification.
+An administrator can turn this off by setting `RST_CONTENT_AUTO_APPLY=0`, as
+described in the Documentation; the Software then stops fetching content
+packs, and an administrator imports and activates them manually. An
+administrator can also return to an earlier content pack.
+
+Reallysec may provide updates during the term of your License, and for the
+Community Edition at its discretion. Support, service
 levels, and maintenance are provided only as set out in your Order or a separate
 support agreement.
 
 Features that the Software or the Documentation marks as preview, beta, or
 experimental are provided for evaluation. Reallysec may change or remove them
-at any time, and Section 9.1 does not apply to them.
+at any time, and Sections 9.1 and 10 do not apply to them.
 
 ## 8. Usage Verification
 
-At Reallysec's written request, no more than once in any twelve (12) month
-period, you will provide within thirty (30) days a written statement, signed by
-an authorized representative, of the number of nodes on which the Software is
-installed, the number of users, and the Edition in use. If the statement shows use beyond your
-License, you will pay the applicable fees for the excess use under Reallysec's
-then-current price list.
+**Self-certification.** At Reallysec's written request, no more than once in
+any twelve (12) month period, you will provide within thirty (30) days a
+written statement, signed by an authorized representative, of the number of
+Nodes on which the Software is installed, the number of Users, and the Edition
+in use. Reallysec may also rely on the activation records held by its license
+service.
+
+**Audit.** Reallysec, or an independent auditor bound by confidentiality
+obligations, may verify your use of the Software no more than once in any
+twelve (12) month period, on at least thirty (30) days' written notice, during
+your normal business hours, remotely where practicable, and in a way that does
+not unreasonably interfere with your business. Information obtained in an audit
+is used only to verify compliance with your License and is kept confidential.
+Reallysec bears the cost of the audit, unless it shows that you underpaid the
+fees due for the audited period by more than five percent (5%), in which case
+you will reimburse Reallysec's reasonable audit costs.
+
+If the verification shows use beyond your License, you will pay the applicable
+fees for the excess use under Reallysec's then-current price list.
 
 ## 9. Warranty
 
-### 9.1 Limited warranty
+### 9.1 Limited warranty for Paid Editions
 
-For a paid License, Reallysec warrants that for ninety (90) days from the date
-the License is first issued, the Software will perform substantially as
-described in the Documentation. If it does not, and you notify Reallysec within
-that period, Reallysec will at its option correct the Software or refund the
-fees you paid for the nonconforming Software, in which case your License ends.
-**This is your sole and exclusive remedy for breach of this warranty.** The
-warranty does not apply to the Community Edition, trial Licenses, preview features, or problems caused
-by modification, misuse, or an environment the Documentation does not support.
+Reallysec warrants that during the Subscription Term, the Software, as
+delivered by Reallysec, will perform materially in accordance with the
+Documentation. If it does not, and you notify Reallysec in writing with
+reasonable detail during the Subscription Term, Reallysec will repair or
+replace the Software. If Reallysec cannot do so within thirty (30) days of your
+notice, either party may terminate the affected License, and Reallysec will
+refund the fees you prepaid for the unused remainder of its Subscription Term.
+**This is your sole and exclusive remedy, and Reallysec's entire liability, for
+breach of this warranty.** The warranty does not apply to preview features, AI
+Output, third-party components and services, releases Reallysec no longer
+supports, or problems caused by modification, misuse, or an environment the
+Documentation does not support.
 
 ### 9.2 Disclaimer
 
-**Except for Section 9.1, and to the maximum extent permitted by law, the
-Software is provided "as is" and "as available", without warranties of any
-kind, express or implied, including warranties of merchantability, fitness for
-a particular purpose, and non-infringement. Reallysec does not warrant that the
-Software will be error-free or uninterrupted, or that it will detect, prevent,
-or mitigate any security incident. Output generated with language models may
-be inaccurate and must be reviewed before you rely on it. The Software supports,
-and does not replace, your own security controls, monitoring, and professional
-judgment.**
+**The Community Edition, trial Licenses and preview features are provided
+"as is", without any warranty. Except for Section 9.1, and to the maximum
+extent permitted by law, the Software is provided "as is" and "as available",
+without warranties of any kind, express or implied, including warranties of
+merchantability, fitness for a particular purpose, and non-infringement.
+Reallysec does not warrant that the Software will be error-free or
+uninterrupted, or that it will detect, prevent, or mitigate any security
+incident. The Software supports, and does not replace, your own security
+controls, monitoring, and professional judgment.**
 
-## 10. Limitation of Liability
+### 9.3 AI Output and QRadar Actions
 
-**To the maximum extent permitted by law, Reallysec is not liable for any
+**AI Output is generated by language models that Reallysec does not control. It
+may be incomplete or wrong, and the same input may produce different output.
+A qualified person must review AI Output, including any triage verdict, query
+or investigation finding, before you rely or act on it.**
+
+**QRadar Actions are taken at your direction. You decide which Users may take
+them, you control the QRadar permissions of the service token you give the
+Software, and you are responsible for reviewing each action before you confirm
+it and for its effect on your QRadar deployment and your security operations.
+Reallysec recommends that you grant that token only the permissions the
+Software needs.**
+
+## 10. Intellectual Property Indemnity (Paid Editions)
+
+**10.1 Defense and payment.** If a third party brings a claim against you
+alleging that the Software of a Paid Edition, as delivered by Reallysec and used
+in accordance with this Agreement and the Documentation, infringes that third
+party's patent, copyright or trademark or misappropriates its trade secret,
+Reallysec will defend you against the claim at its own expense and will pay the
+damages and costs finally awarded against you by a court or arbitral tribunal,
+or agreed in a settlement that Reallysec approves in writing.
+
+**10.2 Procedure.** Reallysec's obligations apply only if you (a) notify
+Reallysec in writing promptly enough that its defense is not prejudiced,
+(b) give Reallysec sole control of the defense and settlement of the claim, and
+(c) provide reasonable cooperation, at Reallysec's expense for your reasonable
+out-of-pocket costs. You may take part in the defense with your own counsel at
+your own expense. You may not settle the claim without Reallysec's prior written
+consent, and Reallysec will not, without your consent, agree to a settlement
+that requires you to admit fault or to do anything other than stop using the
+Software.
+
+**10.3 Remedies.** If the Software is, or in Reallysec's opinion is likely to
+be, held to infringe, Reallysec may at its option and expense (a) obtain the
+right for you to continue using it, (b) modify or replace it so that it no
+longer infringes without materially reducing its functionality, or (c) if
+neither is commercially reasonable, terminate the affected License and refund
+the fees you prepaid for the unused remainder of its Subscription Term.
+
+**10.4 Exclusions. Reallysec has no obligation under this Section for any claim
+to the extent it arises from: (a) the Community Edition, a trial License or
+preview features; (b) modification of the Software by anyone other than
+Reallysec; (c) combination of the Software with products, data, or processes
+not provided by Reallysec, where the claim would not have arisen without the
+combination; (d) AI Output, or the models and services of Language-Model
+Providers; (e) third-party and open-source components listed in the
+THIRD-PARTY-NOTICES file, or the third-party services described in Section 5;
+(f) Your Data or other materials you provide; (g) your continued use of the
+allegedly infringing Software after Reallysec has told you to stop or has
+provided a modification or update that would have avoided the claim; or
+(h) your use of the Software in breach of this Agreement.**
+
+**10.5 Limits. Reallysec's obligations under this Section are subject to the
+limit in Section 11.2. This Section states Reallysec's entire liability, and
+your exclusive remedy, for any claim that the Software infringes or
+misappropriates a third party's intellectual property rights.**
+
+## 11. Limitation of Liability
+
+**11.1 To the maximum extent permitted by law, Reallysec is not liable for any
 indirect, incidental, special, consequential, or punitive damages, or for any
 loss of profits, revenue, data, or business, even if advised of the possibility
 of such damages.**
 
-**Reallysec's total cumulative liability arising out of or relating to this
-Agreement, under any theory of liability, will not exceed the fees you actually
-paid to Reallysec for the Software in the twelve (12) months before the event
-giving rise to the claim. For the Community Edition or a trial License this amount is zero.**
+**11.2 To the maximum extent permitted by law, Reallysec's total cumulative
+liability arising out of or relating to this Agreement, under any theory of
+liability, will not exceed (a) for a Paid Edition, the fees you actually paid
+to Reallysec for the Software in the twelve (12) months before the event giving
+rise to the claim; and (b) for the Community Edition, a trial License, or
+preview features, the greater of those fees and RMB 50.**
 
-This section does not exclude liability for personal injury caused by
-Reallysec, for property damage caused by Reallysec's intent or gross
-negligence, or any other liability that cannot be excluded by law.
+**11.3** Sections 11.1 and 11.2 do not limit or exclude Reallysec's liability
+for (a) death or personal injury; (b) property damage caused intentionally or
+by gross negligence; (c) fraud or wilful misconduct; or (d) any other liability
+that cannot be limited or excluded under applicable law, including Article 506
+of the Civil Code of the People's Republic of China.
 
-## 11. Term and Termination
+## 12. Term and Termination
 
 This Agreement takes effect when you first install or use the Software and
 continues until it is terminated. Reallysec may terminate this Agreement if you
 breach Section 3 or fail to pay applicable fees and do not cure the breach
-within thirty (30) days of notice.
+within thirty (30) days of notice, or with immediate effect where Section 14.3
+applies.
 
 When a License expires, the rights it grants beyond the Community Edition end,
 and you may continue to use the Software as the Community Edition under
 Section 2. A revoked License ends the same way.
 
-On termination you must stop using the Software and destroy all copies.
-Sections 3, 4, 8, 9.2, 10, 12, and 13 survive termination.
+On termination you must stop using the Software and destroy all copies. You may,
+however, keep running the Software for up to thirty (30) days solely to export
+the records it holds, unless applicable law prohibits it or the termination
+results from your use of the Software in violation of law. Sections 3, 4, 6.6,
+8, 9.2, 9.3, 10, 11, 14, 15, and 16 survive termination.
 
-## 12. Governing Law and Disputes
+## 13. Changes to this Agreement
+
+Reallysec may update this Agreement. Each version of the Software is delivered
+with the Agreement that applies to it, and the version number and effective
+date appear at the top. When the version changes, the Software asks each User
+to accept the new version as described at the beginning of this Agreement. For
+a paid License, the Agreement in effect when your License term starts applies
+until that term ends, and an updated Agreement applies from your next renewal.
+For the Community Edition and trials, an updated Agreement applies when you
+install, or upgrade to, a version of the Software that includes it.
+
+## 14. Export Control and Sanctions
+
+**14.1 Compliance.** Each party will comply with the export control and
+economic sanctions laws that apply to it, to the Software, or to the
+transaction, including the Export Control Law of the People's Republic of China
+and, where they apply, the sanctions of the United Nations Security Council and
+the export control and sanctions laws of the European Union and the United
+States. You will not export, re-export, or transfer the Software, or give
+access to it, in violation of those laws. Nothing in this Section requires
+either party to act in a way that would violate the laws of the People's
+Republic of China.
+
+**14.2 Your representations. You represent that (a) you are not identified on,
+and are not owned or controlled by a person identified on, a restricted-party
+or sanctions list under the laws referred to in Section 14.1 that prohibits
+Reallysec from supplying the Software to you; and (b) you will not use the
+Software for an end use prohibited by those laws, including the development or
+production of weapons of mass destruction or their means of delivery. You will
+notify Reallysec promptly if either statement stops being true.**
+
+**14.3 Suspension.** If supplying the Software or a License to you would
+violate the laws referred to in Section 14.1, Reallysec may suspend or terminate
+your License without liability. Where the law permits, Reallysec will refund the
+fees you prepaid for the unused remainder of the Subscription Term.
+
+## 15. Governing Law and Disputes
 
 This Agreement is governed by the laws of the People's Republic of China,
 excluding its conflict-of-laws rules. The parties will first try to resolve any
@@ -186,7 +455,7 @@ Hefei Arbitration Commission for arbitration under its rules then in effect. The
 seat of arbitration is Hefei, Anhui Province, and the language of arbitration
 is Chinese. The award is final and binding on both parties.
 
-## 13. General
+## 16. General
 
 - **Entire agreement.** This Agreement, together with your Order, is the entire
   agreement between you and Reallysec regarding the Software and supersedes all
@@ -206,42 +475,63 @@ is Chinese. The award is final and binding on both parties.
   remaining provisions remain in effect. Failure to enforce a provision is not a
   waiver.
 - **Trademarks.** IBM and QRadar are trademarks of International Business
-  Machines Corporation. The Software is an independent product and is not
-  affiliated with, endorsed by, or sponsored by IBM. References to QRadar
-  identify the platform the Software works with.
-- **Language.** This Agreement is provided in English and Chinese. If the two
-  versions conflict, the English version prevails.
+  Machines Corporation, registered in many jurisdictions worldwide. This
+  product is not affiliated with, sponsored or endorsed by IBM. References to
+  QRadar identify the platform the Software works with. Other names may be
+  trademarks of their respective owners.
+- **Language.** This Agreement is provided in Chinese and English. If the two
+  versions conflict, the Chinese version prevails.
 
 Contact: https://reallysec.com
 
 ---
 
-# RST QRadar AI Copilot 最终用户许可协议
+# RST AI Copilot for QRadar 最终用户许可协议
 
-版本 1.2 · 生效日期 2026-10-05
+版本 1.3 · 生效日期 2026-10-06
 
 本《最终用户许可协议》（「本协议」）由安徽斯普朗克信息技术有限公司（Anhui
 Reallysec Information Technology Ltd.，「版权人」）与安装或使用本软件的个人
-或单位（「您」）订立。您安装、激活或使用本软件，即表示同意本协议。如不同意，
-请勿安装或使用本软件。您代表单位接受本协议的，即表示您有权代表该单位签约，
+或单位（「您」）订立。您代表单位接受本协议的，即表示您有权代表该单位签约，
 「您」指该单位。
 
-**请您特别注意本协议中以加粗方式标示的条款。这些条款限制版权人的担保与赔偿
-责任，并限制您使用本软件的方式。**
+**接受方式。** 您安装、激活或使用本软件，即表示接受本协议。此外，每位用户首次
+登录时，以及本协议版本变更后再次登录时，本软件均会请其确认已阅读并同意本协议；
+不同意的用户无法使用本软件。本软件没有单独用户账号时，由管理员代表该安装实例
+接受。如不同意，请勿安装或使用本软件。
+
+**请您特别注意本协议中以加粗方式标示的条款。这些条款限制版权人的担保、赔偿及
+责任（第九条、第十条、第十一条），限制您使用本软件的方式（第三条、第十四条），
+并规定您对您的数据及其发送目的地（第六条）、大模型生成内容以及本软件按您的指示
+在您的 QRadar 部署中所做变更（第九条第（三）款）应承担的责任。**
 
 ## 一、定义
 
-- **「本软件」**：版权人以目标代码形式交付的 RST QRadar AI Copilot，包括容器
-  镜像、部署文件、编译后的功能模块、文档及版权人提供的任何更新。
+- **「本软件」**：版权人以目标代码形式交付的 RST AI Copilot for QRadar，包括
+  容器镜像、部署文件、编译后的功能模块、文档及版权人提供的任何更新。本软件是一款
+  安全运营助手，读取您所连接的 IBM QRadar® 部署中的数据，并可按您的指示对其执行
+  操作。
 - **「文档」**：版权人在 https://reallysec.com/docs 为本软件发布的使用与安装
   指南。
 - **「许可」**：版权人签发的许可密钥或许可文件，其中载明您的版本、功能集、
   节点数、用户数及期限。
 - **「版本」**：社区版、专业版、企业版或试用。专业版、企业版及试用以许可载明为准；
   未使用许可时即为社区版。
+- **「付费版本」**：您已支付相应费用的许可项下的专业版或企业版。试用不属于付费
+  版本。
+- **「订阅期」**：您的许可或订单载明的付费版本许可期限。
+- **「节点」**：本软件在一台主机上的一个安装实例，以其主机指纹（见第六条第（二）款）
+  识别。
+- **「用户」**：本软件中启用中的用户账号。已停用的账号不计入用户。
 - **「订单」**：您据以取得许可的报价单、采购订单或其他文件。
 - **「您的数据」**：本软件代您处理的、来自您 QRadar 部署的事件、网络流、Offense
   及其他数据。
+- **「大模型服务商」**：您在本软件中配置的大模型端点的提供方，包括您自行部署的
+  模型。
+- **「大模型生成内容」**：本软件借助大模型生成的分析、摘要、回答、查询及其他内容。
+- **「QRadar 操作」**：本软件按您或您的用户的指示，通过 QRadar API 在您的 QRadar
+  部署中进行的变更，即为 Offense 添加备注、分派 Offense、设置或取消 Offense 的
+  跟进标记以及关闭 Offense。
 
 ## 二、许可授予
 
@@ -269,99 +559,261 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
    版权人书面同意的除外；**
 5. **在超出许可允许范围的节点、用户、主机或组织之间共用同一许可；**
 6. **移除、更改或遮蔽本软件中的任何版权、商标、许可或其他声明；**
-7. **违反适用法律（包括出口管制及数据保护法律）使用本软件。**
+7. **违反适用法律（包括第六条及第十四条所述的出口管制、制裁及数据保护法律）
+   使用本软件。**
 
 ## 四、权利归属
 
 本软件系许可使用，而非出售。版权人及其许可方保留对本软件的一切权利、所有权及
 权益，包括全部知识产权。本协议未明确授予的一切权利均予保留。
 
+版权人不主张对您的数据或大模型生成内容的所有权。您使用大模型生成内容的风险依
+第九条第（三）款由您自行承担。
+
 您就本软件提出的建议或反馈，版权人可不受限制地使用，且不对您负有任何义务。
 
-## 五、第三方组件
+## 五、第三方组件与服务
 
 本软件包含第三方及开源组件，清单见随本软件交付的 THIRD-PARTY-NOTICES 文件。
 各组件依据其各自的条款授权，您对该组件的使用受该条款约束。本协议不限制您在
 该等许可项下享有的权利。
 
-## 六、数据
+您的 QRadar 部署、大模型服务商以及您接入本软件的通知服务均不属于本软件。您依据
+与其提供方之间的协议取得该等服务。版权人不控制该等服务，亦不对其可用性、安全性、
+内容或其对您所发送数据的处理负责。
+
+## 六、数据与隐私
+
+### （一）您的数据
 
 本软件运行于您的环境中。您的数据处于您的控制之下并由您负责，包括在适用的数据
-保护法律项下的责任。
+保护法律项下的责任。除依本条第（六）款进行支持访问外，版权人不通过本软件接收
+您的数据。
 
-- **QRadar Console。** 本软件使用您提供的授权服务 Token 连接您配置的 QRadar
-  Console，以读取和检索您的数据。该 Token 保存在您的环境中，不发送给版权人。
-- **许可与更新服务。** 为激活和校验许可并提供更新，本软件向版权人的许可服务
-  发送许可标识、产品标识及版本、由机器标识生成的主机指纹哈希值以及激活状态，
-  不发送您的数据。您的版本包含离线激活时，离线激活不发送任何数据。
-- **大模型。** 本软件依据您选择的字段脱敏模式，将提示词（可能包含您的数据的一
-  部分）发送至您配置的大模型端点。该等端点由您或您选择的服务商依据其自身条款
-  提供，版权人不接收该等数据。
+### （二）本软件向您的环境之外发送的数据
 
-## 七、更新、支持与预览功能
+除您自行配置的目的地（您的 QRadar Console、大模型服务商、通知渠道、审计转发的
+syslog 及 webhook 目标、报告 webhook 以及单点登录服务）外，本软件仅在下列情形向
+您的环境之外发送数据。上述目的地均无默认值，本软件的网页界面不加载任何第三方脚本
+或分析工具。
 
-版权人可在许可期限内提供更新。支持、服务水平及维护仅依据您的订单或单独的支持
+- **在线激活。** 您在线激活许可时，本软件向版权人的许可服务
+  （license.reallysec.com）发送一次：许可令牌（包括其中载明的被许可人信息，例如
+  电子邮箱、许可类型以及节点数和用户数上限）、许可标识、产品标识及版本、本软件首次
+  启动时随机生成的安装标识以及主机指纹。主机指纹是由机器标识（例如 machine ID 或
+  MAC 地址、CPU 型号及操作系统名称）计算得出的 SHA-256 哈希值，原始值不离开该机器。
+- **心跳。** 在线激活的许可使用期间，本软件大约每二十四（24）小时一次（失败后每
+  五（5）分钟重试）向许可服务发送许可标识、产品标识及版本、安装标识、主机指纹以及
+  时间戳。许可会话即将到期时，以相同数据续期。心跳不包含主机名、用户名或 IP 地址。
+  停用许可仅在本地生效，不发送任何数据。
+- **校验失败报告。** 许可处于激活状态时，下载的发布清单或内容包未通过签名验证的，
+  本软件向许可服务发送许可标识、产品标识及版本以及失败原因。本软件不发送任何其他
+  遥测数据，也不发送崩溃报告。
+- **更新检查。** 所有安装实例（包括社区版及未使用许可的安装实例）大约每天一次向
+  GitHub Releases（由 GitHub, Inc. 而非版权人运营）或您配置的镜像发送匿名请求，
+  以查找新版本和经签名的内容包。该请求除普通 HTTP 请求本身携带的信息外，不包含
+  版本号、许可信息或任何客户数据。新版本仅在管理员选择时下载和安装。内容包按第七条
+  所述方式处理。
+- **离线激活。** 您的版本包含离线激活时，离线激活的安装实例不发出上述任何请求。
+- **QRadar Console。** 本软件仅将您提供的授权服务 Token 发送至您配置的 QRadar
+  Console，用于读取和检索您的数据以及执行 QRadar 操作。该 Token 不发送给版权人或
+  任何大模型服务商，也不写入日志。
+- **大模型。** 本软件没有内置的大模型端点或密钥。本软件依据您选择的字段脱敏模式
+  （见本条第（四）款），将用户问题以及 Offense、事件和 AQL 查询结果（可能包含您的
+  数据的一部分）仅发送至您配置的大模型端点。版权人不接收该等数据。
+
+与任何互联网服务一样，许可服务也会收到每次请求的来源 IP 地址。依本条发送至
+版权人或 GitHub 的任何数据均不包含您的 Offense、事件或查询的内容。版权人不使用
+您的数据训练大模型。
+
+### （三）版权人对许可服务数据的使用
+
+对于依本条第（二）款到达其许可服务的数据（包括 IP 地址），版权人仅用于激活和
+校验许可、执行许可的节点数及用户数限制、发现被篡改的版本和内容包以及许可的滥用、依第八条
+核验用量以及提供支持。版权人不出售该等数据，也不将其用于广告。版权人在您的许可
+有效期间及许可终止后至多两（2）年内保存该等数据，法律要求更长期限的除外，期满后
+予以删除或匿名化处理。该等数据中属于个人信息的部分，版权人按照其隐私政策
+（https://reallysec.com/privacy-policy）处理。
+
+### （四）大模型服务商
+
+**字段脱敏依据已知的模式和字段名进行匹配，可以减少但不能保证完全去除发送给大模型
+服务商的内容中的个人信息或敏感信息。特别是，日志消息等自由文本字段中的用户名在任何
+模式下均不脱敏，离线（airgapped）模式完全不脱敏。大模型服务商及脱敏模式由您选择。您对与大模型
+服务商之间的协议负责（包括其是否可以保留您的数据或将其用于训练模型），并负责遵守
+向其发送数据所适用的法律，包括个人信息保护及数据出境的相关规定。**
+
+### （五）数据出境
+
+**您的数据发送至何处由您决定。您配置的大模型服务商、通知服务或其他目的地位于中国
+境外的，向其发送数据所适用的安全评估、标准合同、认证、个人同意或其他要求，由您
+负责履行。** 许可服务由版权人运营，可能部署在中国境外；GitHub Releases 由 GitHub
+在中国境外运营。向其发送的数据仅限于本条第（二）款所列数据。未使用许可的安装实例
+不向许可服务发送任何数据，离线激活的安装实例两者均不访问。
+
+### （六）支持访问
+
+版权人仅在您针对具体支持请求事先授权的情况下，并在您授权的范围内，访问您的环境
+或您的数据。此时版权人作为《中华人民共和国个人信息保护法》第二十一条所称的受托人
+代您处理数据：仅为提供您所请求的支持并按照您的指示处理您的数据，对其保密，仅允许
+负有保密义务的人员访问，并且在支持完成后不保留副本，但经您同意的除外。经您要求，
+版权人将与您签订载明上述义务的数据处理协议。
+
+## 七、许可校验、更新、支持与预览功能
+
+**付费许可或试用许可在激活时接受校验；在线激活的，此后还会在依第六条第（二）款
+进行的每次心跳时校验。在线激活的安装实例连续七（7）日以上无法连接许可服务的，本软件
+锁定其功能，直至恢复连接。许可到期或被吊销的，超出社区版的功能停止生效，本软件依
+第十二条按社区版继续运行。上述任何情形下，您的数据均不会被删除。**
+
+版本和内容包均经版权人签名，未通过签名验证的，本软件予以拒绝。默认情况下，检查更新
+时发现的较新内容包通过验证后自动生效。管理员可按文档所述设置
+`RST_CONTENT_AUTO_APPLY=0` 关闭此功能；关闭后本软件不再获取内容包，由管理员手动
+导入并启用。管理员也可以切换回较早的内容包。
+
+版权人可在许可期限内提供更新，并可自行决定为社区版提供更新。支持、服务水平及维护仅依据您的订单或单独的支持
 协议提供。
 
 本软件或文档标示为预览、测试或实验性质的功能仅供评估。版权人可随时变更或移除
-该等功能，第九条第（一）款不适用于该等功能。
+该等功能，第九条第（一）款及第十条不适用于该等功能。
 
 ## 八、用量核验
 
-经版权人书面要求（每十二（12）个月不超过一次），您应在三十（30）日内提供经您
-授权代表签署的书面说明，载明本软件的安装节点数、用户数及所用版本。如该说明显示使用
-超出许可范围，您应按版权人届时有效的价目表支付超出部分的费用。
+**自行申报。** 经版权人书面要求（每十二（12）个月不超过一次），您应在三十（30）
+日内提供经您授权代表签署的书面说明，载明本软件的安装节点数、用户数及所用版本。
+版权人亦可依据其许可服务保存的激活记录进行核验。
+
+**审计。** 版权人或负有保密义务的独立审计方可核验您对本软件的使用，每十二（12）
+个月不超过一次，应至少提前三十（30）日书面通知，在您的正常工作时间内进行，能远程
+进行的远程进行，且不得不合理地干扰您的业务。审计中获得的信息仅用于核验您是否遵守
+许可，并予以保密。审计费用由版权人承担；但审计显示您在被审计期间少付的费用超过
+应付费用百分之五（5%）的，您应向版权人偿付合理的审计费用。
+
+核验显示使用超出许可范围的，您应按版权人届时有效的价目表支付超出部分的费用。
 
 ## 九、担保
 
-### （一）有限担保
+### （一）付费版本的有限担保
 
-对于付费许可，版权人担保：自许可首次签发之日起九十（90）日内，本软件的运行与
-文档描述基本相符。如不相符且您在该期限内通知版权人，版权人可选择修正本软件，
-或退还您为不相符软件支付的费用（此时您的许可终止）。**上述措施是您就违反本担保
-可获得的唯一救济。** 本担保不适用于社区版、试用许可、预览功能，以及因修改、误用或在
-文档未支持的环境中运行而导致的问题。
+版权人担保：在订阅期内，版权人交付的本软件在所有重大方面按照文档运行。如不相符，
+且您在订阅期内以书面形式向版权人发出载明合理细节的通知，版权人将修复或更换本软件。
+版权人自收到通知之日起三十（30）日内未能修复或更换的，任何一方均可终止相关许可，
+版权人将退还您已预付的该许可订阅期剩余部分的费用。**上述措施是您就违反本担保可
+获得的唯一救济，也是版权人就此承担的全部责任。** 本担保不适用于预览功能、大模型
+生成内容、第三方组件与服务、版权人已不再支持的版本，以及因修改、误用或在文档未
+支持的环境中运行而导致的问题。
 
 ### （二）免责声明
 
-**除本条第（一）款外，在法律允许的最大范围内，本软件按「现状」及「现有可用」
-提供，不附带任何明示或默示的担保，包括对适销性、特定用途适用性及不侵权的担保。
-版权人不保证本软件无错误、不中断，亦不保证其能够检测、阻止或缓解任何安全事件。
-由大模型生成的内容可能不准确，您在依赖前须自行审核。本软件是您自身安全控制、
+**社区版、试用许可及预览功能按「现状」提供，不附带任何担保。除本条第（一）款外，
+在法律允许的最大范围内，本软件按「现状」及「现有可用」提供，不附带任何明示或默示
+的担保，包括对适销性、特定用途适用性及不侵权的担保。版权人不保证本软件无错误、
+不中断，亦不保证其能够检测、阻止或缓解任何安全事件。本软件是您自身安全控制、
 监测及专业判断的辅助工具，不能替代之。**
 
-## 十、责任限制
+### （三）大模型生成内容与 QRadar 操作
 
-**在法律允许的最大范围内，对于任何间接的、附带的、特殊的、后果性的或惩罚性的
-损害，或任何利润、收入、数据或业务损失，版权人均不承担责任，即使已被告知该等
+**大模型生成内容由版权人无法控制的大模型生成，可能不完整或不正确，相同输入也可能
+得到不同输出。对于大模型生成内容（包括任何研判结论、查询或调查发现），您须在依赖
+或据以采取行动前由具备相应能力的人员审核。**
+
+**QRadar 操作依您的指示执行。由您决定哪些用户可执行该等操作，并由您控制您提供给
+本软件的服务 Token 所具有的 QRadar 权限；您负责在确认前审核每一项操作，并对其给
+您的 QRadar 部署及安全运营造成的影响负责。版权人建议您仅向该 Token 授予本软件所需
+的权限。**
+
+## 十、知识产权赔偿（付费版本）
+
+**（一）抗辩与赔付。** 第三方向您提出索赔，主张付费版本的本软件（以版权人交付的
+形式并按照本协议及文档使用）侵犯其专利权、著作权或商标权或者侵犯其商业秘密的，
+版权人将自费为您抗辩，并支付法院或仲裁庭终局裁判您应承担的赔偿及费用，或经版权人
+书面同意的和解中约定的金额。
+
+**（二）程序。** 版权人承担上述义务的前提是您：（1）及时书面通知版权人，使其抗辩
+不因迟延而受损；（2）由版权人全权控制该索赔的抗辩与和解；（3）提供合理配合，由此
+产生的合理实际支出由版权人承担。您可以自费委托律师参与抗辩。未经版权人事先书面
+同意，您不得就该索赔达成和解；未经您同意，版权人不得达成要求您承认过错或者要求您
+从事停止使用本软件以外的任何行为的和解。
+
+**（三）补救措施。** 本软件被认定或版权人认为可能被认定侵权的，版权人可自行选择
+并自费：（1）为您取得继续使用的权利；（2）修改或更换本软件，使其不再侵权且功能
+不受重大减损；或（3）上述两项在商业上均不合理可行的，终止相关许可，并退还您已
+预付的该许可订阅期剩余部分的费用。
+
+**（四）除外情形。对于索赔中因下列原因引起的部分，版权人不承担本条项下的义务：
+（1）社区版、试用许可或预览功能；（2）版权人以外的任何人对本软件的修改；（3）将本
+软件与非由版权人提供的产品、数据或流程结合使用，且如无该结合不会引起该索赔；
+（4）大模型生成内容，或大模型服务商的模型及服务；（5）THIRD-PARTY-NOTICES 文件
+所列的第三方及开源组件，或第五条所述的第三方服务；（6）您的数据或您提供的其他
+材料；（7）在版权人通知您停止使用、或已提供可避免该索赔的修改或更新后，您继续使用
+被指侵权的本软件；（8）您违反本协议使用本软件。**
+
+**（五）限额。版权人在本条项下的义务受第十一条第（二）款所述限额的限制。本条规定
+了版权人就本软件侵犯或侵占第三方知识产权的索赔所承担的全部责任，以及您就此可获得
+的唯一救济。**
+
+## 十一、责任限制
+
+**（一）在法律允许的最大范围内，对于任何间接的、附带的、特殊的、后果性的或惩罚性
+的损害，或任何利润、收入、数据或业务损失，版权人均不承担责任，即使已被告知该等
 损害的可能性。**
 
-**版权人因本协议引起或与之相关的全部累计赔偿责任（无论基于何种法律理论），不
-超过引起索赔的事件发生前十二（12）个月内您就本软件实际向版权人支付的费用总额。
-社区版或试用许可的该金额为零。**
+**（二）在法律允许的最大范围内，版权人因本协议引起或与之相关的全部累计赔偿责任
+（无论基于何种法律理论）：（1）对于付费版本，不超过引起索赔的事件发生前十二（12）
+个月内您就本软件实际向版权人支付的费用总额；（2）对于社区版、试用许可或预览功能，
+不超过上述费用总额与人民币 50 元两者中的较高者。**
 
-本条不排除版权人造成人身损害的责任、因故意或者重大过失造成财产损失的责任，
-以及其他依法不得排除的责任。
+**（三）** 本条第（一）款及第（二）款不限制或排除版权人的下列责任：（1）造成对方
+人身损害的责任；（2）因故意或者重大过失造成对方财产损失的责任；（3）欺诈或故意
+不当行为的责任；（4）依适用法律（包括《中华人民共和国民法典》第五百零六条）不得
+限制或排除的其他责任。
 
-## 十一、期限与终止
+## 十二、期限与终止
 
 本协议自您首次安装或使用本软件之时生效，持续至本协议终止。如您违反第三条或
-未支付相应费用，且在收到通知后三十（30）日内未予纠正，版权人可终止本协议。
+未支付相应费用，且在收到通知后三十（30）日内未予纠正，版权人可终止本协议；出现
+第十四条第（三）款所述情形的，版权人可立即终止本协议。
 
 许可到期后，该许可授予的超出社区版的权利随之终止，您可依第二条继续以社区版
 使用本软件。许可被吊销的，亦同。
 
-本协议终止后，您须停止使用本软件并销毁全部副本。第三条、第四条、第八条、
-第九条第（二）款、第十条、第十二条及第十三条在本协议终止后继续有效。
+本协议终止后，您须停止使用本软件并销毁全部副本。但您可以在三十（30）日内仅为
+导出本软件保存的记录而继续运行本软件，适用法律禁止或者本协议因您违法使用本软件
+而终止的除外。第三条、第四条、第六条第（六）款、第八条、第九条第（二）款及
+第（三）款、第十条、第十一条、第十四条、第十五条及第十六条在本协议终止后继续有效。
 
-## 十二、适用法律与争议解决
+## 十三、协议变更
+
+版权人可更新本协议。本软件的每个版本均随附适用于该版本的协议，版本号及生效日期
+载于协议开头。协议版本变更时，本软件将按本协议开头所述方式请每位用户接受新版本。
+对于付费许可，许可期限开始时有效的协议适用至该期限届满，更新后的协议自您下次续订
+时起适用。对于社区版及试用，更新后的协议自您安装或升级至包含该协议的本软件版本时
+起适用。
+
+## 十四、出口管制与制裁
+
+**（一）合规。** 各方应遵守适用于其自身、本软件或相关交易的出口管制与经济制裁
+法律，包括《中华人民共和国出口管制法》，以及在适用的情况下联合国安理会的制裁措施
+和欧盟、美国的出口管制与制裁法律。您不得违反该等法律出口、再出口或转让本软件，或
+向他人提供本软件的访问。本条不要求任何一方从事违反中华人民共和国法律的行为。
+
+**（二）您的声明。您声明：（1）您未被列入、亦不受被列入以下名单的人员所有或控制：
+依本条第（一）款所述法律设立、禁止版权人向您提供本软件的限制方名单或制裁名单；
+（2）您不会将本软件用于该等法律禁止的最终用途，包括研制或生产大规模杀伤性武器
+及其运载工具。上述声明不再属实的，您应及时通知版权人。**
+
+**（三）暂停。** 向您提供本软件或许可将违反本条第（一）款所述法律的，版权人可
+暂停或终止您的许可，且不承担责任。在法律允许的情况下，版权人将退还您已预付的
+订阅期剩余部分的费用。
+
+## 十五、适用法律与争议解决
 
 本协议适用中华人民共和国法律（不含法律冲突规则）。因本协议引起的或与本协议
 有关的任何争议，双方应首先通过友好协商解决。协商不成的，任何一方均有权将争议
 提交至合肥仲裁委员会，按照其届时有效的仲裁规则进行仲裁。仲裁地点为安徽省合肥
 市，仲裁语言为中文。仲裁裁决为终局裁决，对双方均有约束力。
 
-## 十三、其他
+## 十六、其他
 
 - **完整协议。** 本协议与您的订单共同构成您与版权人之间就本软件达成的完整
   协议，并取代此前的一切约定。订单与本协议冲突的，以订单为准。
@@ -374,9 +826,10 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
   info@reallysec.com。致您的通知发送至您订单或许可载明的联系方式。
 - **可分割与弃权。** 任何条款被认定为不可执行的，不影响其余条款的效力。任何一
   方未行使某项条款，不构成对该条款的放弃。
-- **商标。** IBM 和 QRadar 是 International Business Machines Corporation 的
-  商标。本软件是独立产品，与 IBM 不存在隶属、认可或赞助关系。本协议及本软件中
-  提及 QRadar 仅用于说明本软件所适配的平台。
-- **语言。** 本协议以中英文两种文本提供，两种文本如有冲突，以英文文本为准。
+- **商标。** IBM 和 QRadar 是 International Business Machines Corporation 在全球
+  许多司法管辖区注册的商标。本产品与 IBM 不存在隶属关系，亦未获得 IBM 的赞助或
+  认可。本协议及本软件中提及 QRadar 仅用于说明本软件所适配的平台。其他名称可能是
+  其各自所有者的商标。
+- **语言。** 本协议以中英文两种文本提供，两种文本如有冲突，以中文文本为准。
 
 联系方式：https://reallysec.com

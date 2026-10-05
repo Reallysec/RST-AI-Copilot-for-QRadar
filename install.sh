@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-command installer for RST QRadar AI Copilot.
+# One-command installer for RST AI Copilot for QRadar.
 #
 #   curl -fsSL https://github.com/reallysec/RST-Qradar-AI-Copilot/releases/latest/download/install.sh | sudo bash
 #
@@ -14,7 +14,7 @@
 # .env and state/machine-id in that directory, so data and the host fingerprint are kept.
 set -euo pipefail
 
-PRODUCT="RST QRadar AI Copilot"
+PRODUCT="RST AI Copilot for QRadar"
 STEM="RST-Qradar-AI-Copilot"                     # archive: <STEM>-<version>.tar.gz
 GH_REPO="reallysec/RST-Qradar-AI-Copilot"
 # Releases root: <base>/latest redirects to the newest tag, files are <base>/download/v<version>/<file>.

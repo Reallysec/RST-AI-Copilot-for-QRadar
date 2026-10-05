@@ -1,11 +1,11 @@
 <p align="center">
-  <img src=".github/assets/product-mark.svg" width="96" height="96" alt="RST QRadar AI Copilot">
+  <img src=".github/assets/product-mark.svg" width="96" height="96" alt="RST AI Copilot for QRadar">
 </p>
 
-<h1 align="center">RST QRadar AI Copilot</h1>
+<h1 align="center">RST AI Copilot for QRadar</h1>
 
 <p align="center">
-  <b>Ask your QRadar in plain language.</b><br>
+  <b>Ask your QRadar® in plain language.</b><br>
   A self-hosted AI copilot for security operations on the IBM QRadar you already run:<br>
   AQL search, offense triage and investigation, rule designs. Read-only, air-gap ready, every model call audited.
 </p>
@@ -26,7 +26,7 @@
   <img src=".github/assets/chat-query-aql.en.png" alt="Smart query: question, result table and the generated AQL" width="92%">
 </p>
 
-## Why RST QRadar AI Copilot
+## Why RST AI Copilot for QRadar
 
 - **Works with the QRadar you have.** One Docker gateway next to your existing Console. No new data store, no agents; it reads events, flows, offenses, rules and log sources through an authorized-service token.
 - **Read-only by design.** Every generated query is validated as a read-only AQL `SELECT` before it runs. The only writes to QRadar are three analyst-initiated offense actions: add a note, close, assign.
@@ -139,6 +139,10 @@ Details and pricing: [licensing](https://reallysec.com/en/docs/qradar-ai-copilot
 
 ## Licensing
 
-RST QRadar AI Copilot is proprietary software, distributed as compiled container images under the [End User License Agreement](LICENSE), included in every bundle as `docs/EULA.md`. The Community Edition is free to use without a licence; Professional and Enterprise are activated online or with an offline `.lic` from [console.reallysec.com](https://console.reallysec.com). "RST", "Reallysec", "斯普朗克" and the product logos are trademarks.
+RST AI Copilot for QRadar is proprietary software, distributed as compiled container images under the [End User License Agreement](LICENSE), included in every bundle as `docs/EULA.md`. The Community Edition is free to use without a licence; Professional and Enterprise are activated online or with an offline `.lic` from [console.reallysec.com](https://console.reallysec.com). "RST", "Reallysec", "斯普朗克" and the product logos are trademarks.
+
+## Trademarks
+
+IBM and QRadar are trademarks of International Business Machines Corporation, registered in many jurisdictions worldwide. RST AI Copilot for QRadar is an independent product of Reallysec and is not affiliated with, sponsored or endorsed by IBM.
 
 © Anhui Reallysec Information Technology Ltd.
