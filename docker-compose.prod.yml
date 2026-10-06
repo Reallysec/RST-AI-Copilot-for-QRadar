@@ -39,7 +39,7 @@ services:
     # Tag is installer-managed: rst-update.sh writes GATEWAY_IMAGE_TAG into .env
     # on a health-gated release install / rollback (P4). Default preserves the
     # pre-P4 behaviour when the var is unset.
-    image: rst-qradar-ai-copilot-gateway:${GATEWAY_IMAGE_TAG:-1.1.9}
+    image: rst-qradar-ai-copilot-gateway:${GATEWAY_IMAGE_TAG:-1.1.10}
     container_name: rst-qradar-ai-copilot-gateway
     restart: unless-stopped
     # Resource ceiling so one runaway request / memory leak can't starve the
@@ -119,7 +119,6 @@ services:
       # Empty on purpose: a production deployment that still has the factory
       # password should refuse remote logins until a hash is set.
       - RST_ALLOW_DEFAULT_PASSWORD=${RST_ALLOW_DEFAULT_PASSWORD:-}
-      - RST_SHARED_BUCKET_FALLBACK=${RST_SHARED_BUCKET_FALLBACK:-}
       # Per-IP request ceilings. Raise for a large team behind one NAT egress.
       - RST_RATELIMIT_GENERATE=${RST_RATELIMIT_GENERATE:-}
       - RST_RATELIMIT_EXECUTE=${RST_RATELIMIT_EXECUTE:-}
@@ -135,7 +134,7 @@ services:
       # Current running version — the heartbeat sends it, and the server only
       # offers a release/content pack newer than this. Keep in lockstep with
       # GATEWAY_IMAGE_TAG (rst-update.sh bumps the tag on install).
-      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-1.1.9}}
+      - APP_VERSION=${APP_VERSION:-${GATEWAY_IMAGE_TAG:-1.1.10}}
       # Vendor content/release signing PUBLIC key — content packs + online releases
       # verify against it fail-closed. OPTIONAL: leave unset and verification falls
       # back to the built-in license public key (fine until you ship dedicated-key
