@@ -43,14 +43,14 @@
 curl -fsSL https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases/latest/download/install.sh | sudo bash
 ```
 
-脚本下载最新的交付包，校验 SHA-256，解压到 `/opt/rst-qradar-ai-copilot` 后执行 `deploy.sh`。所有版本是同一个交付包：不导入许可即为免费的社区版，在「设置 → 许可」导入许可后原地解锁专业版或企业版。离线主机可以在有网的机器上加 `--download-only` 下载，再把交付包拷过去。
+脚本下载最新的交付包，校验 SHA-256，解压到 `/opt/rst-ai-copilot-for-qradar` 后执行 `deploy.sh`。所有版本是同一个交付包：不导入许可即为免费的社区版，在「设置 → 许可」导入许可后原地解锁专业版或企业版。离线主机可以在有网的机器上加 `--download-only` 下载，再把交付包拷过去。
 
 也可以从 [Releases](https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases) 手动下载交付包，然后：
 
 ```bash
-sha256sum -c RST-Qradar-AI-Copilot-<版本>.tar.gz.sha256
-tar xzf RST-Qradar-AI-Copilot-<版本>.tar.gz
-cd RST-Qradar-AI-Copilot-<版本> && ./deploy.sh
+sha256sum -c RST-AI-Copilot-for-QRadar-<版本>.tar.gz.sha256
+tar xzf RST-AI-Copilot-for-QRadar-<版本>.tar.gz
+cd RST-AI-Copilot-for-QRadar-<版本> && ./deploy.sh
 ```
 
 `deploy.sh` 加载镜像、生成密钥和主机指纹、询问大模型端点和 QRadar Console 地址与 Token，然后在 Caddy TLS 后面起整个栈。约两分钟后打开 `https://<域名>/v2/`。

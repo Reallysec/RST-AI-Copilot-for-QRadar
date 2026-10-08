@@ -43,14 +43,14 @@ Install with one command:
 curl -fsSL https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases/latest/download/install.sh | sudo bash
 ```
 
-The script downloads the latest bundle, checks its SHA-256, unpacks it into `/opt/rst-qradar-ai-copilot` and runs `deploy.sh`. There is one bundle for every edition: without a licence it runs as the free Community Edition, and importing a licence under **Settings → License** unlocks Professional or Enterprise in place. On an air-gapped host, run it elsewhere with `--download-only` and carry the bundle over.
+The script downloads the latest bundle, checks its SHA-256, unpacks it into `/opt/rst-ai-copilot-for-qradar` and runs `deploy.sh`. There is one bundle for every edition: without a licence it runs as the free Community Edition, and importing a licence under **Settings → License** unlocks Professional or Enterprise in place. On an air-gapped host, run it elsewhere with `--download-only` and carry the bundle over.
 
 Or download the bundle from [Releases](https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases) yourself:
 
 ```bash
-sha256sum -c RST-Qradar-AI-Copilot-<version>.tar.gz.sha256
-tar xzf RST-Qradar-AI-Copilot-<version>.tar.gz
-cd RST-Qradar-AI-Copilot-<version> && ./deploy.sh
+sha256sum -c RST-AI-Copilot-for-QRadar-<version>.tar.gz.sha256
+tar xzf RST-AI-Copilot-for-QRadar-<version>.tar.gz
+cd RST-AI-Copilot-for-QRadar-<version> && ./deploy.sh
 ```
 
 `deploy.sh` loads the images, generates secrets and the host fingerprint, asks for the LLM endpoint and the QRadar Console and token, and starts the stack behind Caddy TLS. About two minutes later, open `https://<hostname>/v2/`.

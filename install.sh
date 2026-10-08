@@ -15,12 +15,17 @@
 set -euo pipefail
 
 PRODUCT="RST AI Copilot for QRadar"
-STEM="RST-Qradar-AI-Copilot"                     # archive: <STEM>-<version>.tar.gz
+STEM="RST-AI-Copilot-for-QRadar"                     # archive: <STEM>-<version>.tar.gz
 GH_REPO="Reallysec/RST-AI-Copilot-for-QRadar"
 # Releases root: <base>/latest redirects to the newest tag, files are <base>/download/v<version>/<file>.
 # ponytail: env override exists only so scripts/test_install.sh can point it at a local file:// tree.
 RELEASES="${RST_RELEASES_URL:-https://github.com/$GH_REPO/releases}"
-DIR="/opt/rst-qradar-ai-copilot"
+DIR="/opt/rst-ai-copilot-for-qradar"
+# Installs from before the 1.1.16 rename live here. Keep upgrading them in place: the
+# directory names the compose project (so the data volumes) and holds state/server_guid,
+# so a fresh directory would look like data loss and a new host fingerprint.
+LEGACY_DIR="/opt/rst-qradar-ai-copilot"
+[ -f "$LEGACY_DIR/.env" ] && DIR="$LEGACY_DIR"
 
 VERSION=""; DOWNLOAD_ONLY=0
 while [ $# -gt 0 ]; do
@@ -85,7 +90,7 @@ say "== $PRODUCT $VERSION -> $DIR"
 # The archive carries no .env and no state/, so an existing install keeps both. Old image
 # tars are removed first so deploy.sh loads only this version's images.
 mkdir -p "$DIR"
-rm -f "$DIR"/"$STEM"-images-*.tar
+rm -f "$DIR"/"$STEM"-images-*.tar "$DIR"/RST-Qradar-AI-Copilot-images-*.tar   # + pre-rename leftovers
 tar xzf "$ARCHIVE" -C "$DIR" --strip-components=1
 say "== unpacked; starting deploy.sh"
 cd "$DIR"
