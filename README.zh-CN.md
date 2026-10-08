@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/reallysec/RST-Qradar-AI-Copilot/releases"><img src="https://img.shields.io/github/v/release/reallysec/RST-Qradar-AI-Copilot?label=release&color=0060BE" alt="最新版本"></a>
+  <a href="https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases"><img src="https://img.shields.io/github/v/release/Reallysec/RST-AI-Copilot-for-QRadar?label=release&color=0060BE" alt="最新版本"></a>
   <img src="https://img.shields.io/badge/免费-社区版-0060BE" alt="免费社区版">
   <img src="https://img.shields.io/badge/IBM%20QRadar-7.5%2B-003D7A?logo=ibm&logoColor=white" alt="IBM QRadar 7.5+">
   <img src="https://img.shields.io/badge/deploy-Docker-2496ED?logo=docker&logoColor=white" alt="Docker 部署">
@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="README.md">English</a> · <b>简体中文</b> · <a href="https://reallysec.com/docs/qradar-ai-copilot">文档</a> · <a href="https://github.com/reallysec/RST-Qradar-AI-Copilot/releases">下载</a> · <a href="https://github.com/reallysec/RST-Qradar-AI-Copilot/issues">提交问题</a>
+  <a href="README.md">English</a> · <b>简体中文</b> · <a href="https://reallysec.com/docs/qradar-ai-copilot">文档</a> · <a href="https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases">下载</a> · <a href="https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/issues">提交问题</a>
 </p>
 
 <p align="center">
@@ -40,12 +40,12 @@
 一条命令安装：
 
 ```bash
-curl -fsSL https://github.com/reallysec/RST-Qradar-AI-Copilot/releases/latest/download/install.sh | sudo bash
+curl -fsSL https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases/latest/download/install.sh | sudo bash
 ```
 
 脚本下载最新的交付包，校验 SHA-256，解压到 `/opt/rst-qradar-ai-copilot` 后执行 `deploy.sh`。所有版本是同一个交付包：不导入许可即为免费的社区版，在「设置 → 许可」导入许可后原地解锁专业版或企业版。离线主机可以在有网的机器上加 `--download-only` 下载，再把交付包拷过去。
 
-也可以从 [Releases](https://github.com/reallysec/RST-Qradar-AI-Copilot/releases) 手动下载交付包，然后：
+也可以从 [Releases](https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases) 手动下载交付包，然后：
 
 ```bash
 sha256sum -c RST-Qradar-AI-Copilot-<版本>.tar.gz.sha256
@@ -134,8 +134,8 @@ cd RST-Qradar-AI-Copilot-<版本> && ./deploy.sh
 
 ## 支持
 
-- **使用问题和缺陷**：提交 [issue](https://github.com/reallysec/RST-Qradar-AI-Copilot/issues)。
-- **安全漏洞**：请不要公开提 issue，按[安全策略](https://github.com/reallysec/RST-Qradar-AI-Copilot/security/policy)报告。
+- **使用问题和缺陷**：提交 [issue](https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/issues)。
+- **安全漏洞**：请不要公开提 issue，按[安全策略](https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/security/policy)报告。
 
 ## 许可
 

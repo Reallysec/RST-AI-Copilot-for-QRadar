@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-command installer for RST AI Copilot for QRadar.
 #
-#   curl -fsSL https://github.com/reallysec/RST-Qradar-AI-Copilot/releases/latest/download/install.sh | sudo bash
+#   curl -fsSL https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases/latest/download/install.sh | sudo bash
 #
 # Options: --version <x.y.z> (default: latest)   --dir <path> (default below)
 #          --download-only   verify and save the archive in the current directory, deploy nothing
@@ -16,7 +16,7 @@ set -euo pipefail
 
 PRODUCT="RST AI Copilot for QRadar"
 STEM="RST-Qradar-AI-Copilot"                     # archive: <STEM>-<version>.tar.gz
-GH_REPO="reallysec/RST-Qradar-AI-Copilot"
+GH_REPO="Reallysec/RST-AI-Copilot-for-QRadar"
 # Releases root: <base>/latest redirects to the newest tag, files are <base>/download/v<version>/<file>.
 # ponytail: env override exists only so scripts/test_install.sh can point it at a local file:// tree.
 RELEASES="${RST_RELEASES_URL:-https://github.com/$GH_REPO/releases}"

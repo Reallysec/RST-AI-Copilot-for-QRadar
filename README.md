@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/reallysec/RST-Qradar-AI-Copilot/releases"><img src="https://img.shields.io/github/v/release/reallysec/RST-Qradar-AI-Copilot?label=release&color=0060BE" alt="Latest release"></a>
+  <a href="https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases"><img src="https://img.shields.io/github/v/release/Reallysec/RST-AI-Copilot-for-QRadar?label=release&color=0060BE" alt="Latest release"></a>
   <img src="https://img.shields.io/badge/free-Community_Edition-0060BE" alt="Free Community Edition">
   <img src="https://img.shields.io/badge/IBM%20QRadar-7.5%2B-003D7A?logo=ibm&logoColor=white" alt="IBM QRadar 7.5+">
   <img src="https://img.shields.io/badge/deploy-Docker-2496ED?logo=docker&logoColor=white" alt="Deploy with Docker">
@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <b>English</b> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://reallysec.com/en/docs/qradar-ai-copilot">Docs</a> · <a href="https://github.com/reallysec/RST-Qradar-AI-Copilot/releases">Download</a> · <a href="https://github.com/reallysec/RST-Qradar-AI-Copilot/issues">Report an issue</a>
+  <b>English</b> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://reallysec.com/en/docs/qradar-ai-copilot">Docs</a> · <a href="https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases">Download</a> · <a href="https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/issues">Report an issue</a>
 </p>
 
 <p align="center">
@@ -40,12 +40,12 @@ You need a Linux host with Docker Engine 24+ and Compose v2, network access to a
 Install with one command:
 
 ```bash
-curl -fsSL https://github.com/reallysec/RST-Qradar-AI-Copilot/releases/latest/download/install.sh | sudo bash
+curl -fsSL https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases/latest/download/install.sh | sudo bash
 ```
 
 The script downloads the latest bundle, checks its SHA-256, unpacks it into `/opt/rst-qradar-ai-copilot` and runs `deploy.sh`. There is one bundle for every edition: without a licence it runs as the free Community Edition, and importing a licence under **Settings → License** unlocks Professional or Enterprise in place. On an air-gapped host, run it elsewhere with `--download-only` and carry the bundle over.
 
-Or download the bundle from [Releases](https://github.com/reallysec/RST-Qradar-AI-Copilot/releases) yourself:
+Or download the bundle from [Releases](https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/releases) yourself:
 
 ```bash
 sha256sum -c RST-Qradar-AI-Copilot-<version>.tar.gz.sha256
@@ -134,8 +134,8 @@ Details and pricing: [licensing](https://reallysec.com/en/docs/qradar-ai-copilot
 
 ## Support
 
-- **Questions and bugs**: open an [issue](https://github.com/reallysec/RST-Qradar-AI-Copilot/issues).
-- **Security vulnerabilities**: do not open a public issue; follow the [security policy](https://github.com/reallysec/RST-Qradar-AI-Copilot/security/policy).
+- **Questions and bugs**: open an [issue](https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/issues).
+- **Security vulnerabilities**: do not open a public issue; follow the [security policy](https://github.com/Reallysec/RST-AI-Copilot-for-QRadar/security/policy).
 
 ## Licensing
 
